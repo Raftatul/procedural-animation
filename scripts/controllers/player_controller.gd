@@ -20,7 +20,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		body.velocity.y += 5.0
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	var ray_collider := ray_cast_3d.get_collider()
 	
 	$"../CanvasLayer/Label".text = ""
