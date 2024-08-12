@@ -1,10 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://ccrs7ay68gw60"]
+[gd_scene load_steps=4 format=3 uid="uid://ccrs7ay68gw60"]
 
 [ext_resource type="PackedScene" uid="uid://cp7wu7yo2w4t2" path="res://assets/meshs/robot_leg.glb" id="1_fbbr4"]
 [ext_resource type="Script" path="res://scripts/house_components/robot_leg.gd" id="2_2pg4u"]
 [ext_resource type="Script" path="res://scripts/procedural_animation/ik_target.gd" id="3_077sx"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_p1uy6"]
 
 [node name="robot_leg" node_paths=PackedStringArray("ik") instance=ExtResource("1_fbbr4")]
 process_priority = 1
@@ -37,17 +35,20 @@ magnet = Vector3(0, 0, 1)
 target_node = NodePath("../../../IKTarget")
 max_iterations = 3
 
-[node name="IKTarget" type="RigidBody3D" parent="." index="1"]
+[node name="IKTarget" type="Marker3D" parent="." index="1" node_paths=PackedStringArray("ray")]
 top_level = true
-collision_layer = 0
-axis_lock_linear_x = true
-axis_lock_linear_z = true
-axis_lock_angular_x = true
-axis_lock_angular_y = true
-axis_lock_angular_z = true
 script = ExtResource("3_077sx")
+ray = NodePath("RayCast3D")
 front_step_distance = 2.0
-step_height = 5.0
+step_height = 2.0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="IKTarget" index="0"]
-shape = SubResource("SphereShape3D_p1uy6")
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="IKTarget" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+remote_path = NodePath("../RayCast3D")
+update_rotation = false
+update_scale = false
+
+[node name="RayCast3D" type="RayCast3D" parent="IKTarget" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+top_level = true
+target_position = Vector3(0, -2, 0)

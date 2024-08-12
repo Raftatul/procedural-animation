@@ -21,6 +21,7 @@ size = Vector3(4.00098, 1.98584, 7.04199)
 collision_layer = 2
 script = ExtResource("1_d8mom")
 height_offset = 2.0
+speed = 20.0
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
 shape = SubResource("ConvexPolygonShape3D_r6o8g")
@@ -104,6 +105,9 @@ max_y_angle = 60.0
 
 [node name="SpringArm3D" parent="CameraController" index="0"]
 spring_length = 10.0
+
+[node name="Camera3D" parent="CameraController/SpringArm3D" index="0"]
+current = true
 
 [node name="ControllerInteraction" type="Area3D" parent="."]
 script = ExtResource("7_nj3ml")

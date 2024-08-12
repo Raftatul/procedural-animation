@@ -119,7 +119,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 1, 2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector3(-15.6328, 0, 12.7615), Vector3(-15.633, 1.5, 12.762), Vector3(-15.6328, 0, 12.7615)]
+"values": [Vector3(-15.6328, 0, 12.7615), Vector3(-15.633, 4, 12.762), Vector3(-15.6328, 0, 12.7615)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -170,6 +170,18 @@ autoplay = "new_animation"
 [node name="Platform" parent="." instance=ExtResource("4_7m5lr")]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0.417562, 6.28567, 17.4254)
 
+[node name="RayCast3D" parent="Platform/Legs/FrontLeftLeg/IKTarget" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="RayCast3D" parent="Platform/Legs/FrontRightLeg/IKTarget" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="RayCast3D" parent="Platform/Legs/BackLeftLeg/IKTarget" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="RayCast3D" parent="Platform/Legs/BackRightLeg/IKTarget" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5494, 0, 2.78412)
 use_collision = true
@@ -189,10 +201,10 @@ size = Vector3(14.9141, 0.311523, 15.9471)
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -12.0802, 1.35069, 13.6575)
 
 [editable path="Platform"]
-[editable path="Platform/FrontLeftLeg"]
-[editable path="Platform/FrontRightLeg"]
-[editable path="Platform/BackLeftLeg"]
-[editable path="Platform/BackRightLeg"]
+[editable path="Platform/Legs/FrontLeftLeg"]
+[editable path="Platform/Legs/FrontRightLeg"]
+[editable path="Platform/Legs/BackLeftLeg"]
+[editable path="Platform/Legs/BackRightLeg"]
 [editable path="Platform/CameraController"]
 [editable path="CharacterBody3D"]
 [editable path="CharacterBody3D/CameraController"]
