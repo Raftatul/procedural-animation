@@ -10,7 +10,7 @@ extends GameController
 
 
 func _enter_tree() -> void:
-	control_stat_changed.connect(func(value: bool): body.movement = Vector3.ZERO)
+	control_stat_changed.connect(func(_value: bool): body.movement = Vector3.ZERO)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -29,7 +29,7 @@ func _physics_process(delta: float) -> void:
 		if ray_collider is Interactable:
 			$"../CanvasLayer/Label".text = ray_collider.get_prompt()
 	
-	_handle_movement(delta)
+	_handle_movement()
 
 
 func _interact():
@@ -40,7 +40,7 @@ func _interact():
 			ray_collider.interact(self)
 
 
-func _handle_movement(delta: float):
+func _handle_movement():
 	var direction := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 
 	body.movement = camera_container.global_basis * Vector3(direction.x, 0.0, direction.y) * move_speed
