@@ -19,7 +19,7 @@ const RAY_LENGTH = 1000
 var is_stepping := false
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var hit_point = ray.get_collision_point()
 	if hit_point:
 		global_position = hit_point
