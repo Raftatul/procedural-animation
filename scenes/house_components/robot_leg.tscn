@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://ccrs7ay68gw60"]
+
+[ext_resource type="PackedScene" uid="uid://cp7wu7yo2w4t2" path="res://assets/meshs/robot_leg.glb" id="1_fbbr4"]
+[ext_resource type="Script" path="res://scripts/house_components/robot_leg.gd" id="2_2pg4u"]
+[ext_resource type="Script" path="res://scripts/procedural_animation/ik_target.gd" id="3_077sx"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_p1uy6"]
+
+[node name="robot_leg" node_paths=PackedStringArray("ik") instance=ExtResource("1_fbbr4")]
+process_priority = 1
+script = ExtResource("2_2pg4u")
+ik = NodePath("Armature/Skeleton3D/SkeletonIK3D")
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+bones/0/scale = Vector3(1, 1, 1)
+bones/2/rotation = Quaternion(4.63534e-08, 1.0793e-10, -0.612861, 0.790191)
+bones/2/scale = Vector3(1, 1, 1)
+bones/3/rotation = Quaternion(0.558749, 0.433358, -0.558749, 0.433358)
+bones/4/scale = Vector3(1, 1, 1)
+bones/5/scale = Vector3(1, 1, 1)
+
+[node name="Cube_002" parent="Armature/Skeleton3D" index="0"]
+transform = Transform3D(1, 7.33884e-08, -1.81773e-07, -1.81434e-07, 1, 3.8743e-07, 3.59507e-07, -2.83122e-07, 1, 1.866e-07, -8.31238, -0.661397)
+
+[node name="Cube_001" parent="Armature/Skeleton3D" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.45058e-09, -6.32819, -7.45058e-09)
+
+[node name="Cube" parent="Armature/Skeleton3D" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.39246, 0)
+
+[node name="SkeletonIK3D" type="SkeletonIK3D" parent="Armature/Skeleton3D" index="3"]
+root_bone = &"Bone"
+tip_bone = &"Bone.002"
+override_tip_basis = false
+use_magnet = true
+magnet = Vector3(0, 0, 1)
+target_node = NodePath("../../../Marker3D")
+max_iterations = 3
+
+[node name="Marker3D" type="RigidBody3D" parent="." index="1"]
+top_level = true
+axis_lock_linear_x = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+script = ExtResource("3_077sx")
+front_step_distance = 2.0
+step_height = 5.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Marker3D" index="0"]
+shape = SubResource("SphereShape3D_p1uy6")

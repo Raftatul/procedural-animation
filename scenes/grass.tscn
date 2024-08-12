@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://0b1c80okyjud"]
+
+[ext_resource type="Material" uid="uid://dgy7uxgvxtot5" path="res://ressources/shader_materials/wind.tres" id="1_ngk2b"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_14pqi"]
+material = ExtResource("1_ngk2b")
+orientation = 2
+
+[node name="Node3D" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.055, -7.85398e-05, 0, 8.63938e-06, 0.5, 0, 0, 0, 0.5, 0, 0.5, 0)
+material_override = ExtResource("1_ngk2b")
+mesh = SubResource("PlaneMesh_14pqi")

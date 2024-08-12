@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=3 uid="uid://boevprdry0308"]
+
+[ext_resource type="Script" path="res://scripts/entity.gd" id="1_qnmt7"]
+[ext_resource type="Script" path="res://scripts/controllers/player_controller.gd" id="1_tiujb"]
+[ext_resource type="PackedScene" uid="uid://c4e3gho1nk0tf" path="res://scenes/camera_controller.tscn" id="2_26mnk"]
+[ext_resource type="Script" path="res://scripts/player_canvas.gd" id="3_e61ug"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ddfhs"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_nbws8"]
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_qnmt7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_ddfhs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_nbws8")
+
+[node name="CameraController" parent="." instance=ExtResource("2_26mnk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="CameraController/SpringArm3D" index="1"]
+target_position = Vector3(0, 0, -2)
+hit_from_inside = true
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="GameController" type="Node" parent="." node_paths=PackedStringArray("body", "camera_container", "camera")]
+script = ExtResource("1_tiujb")
+body = NodePath("..")
+camera_container = NodePath("../CameraController")
+is_controlled = true
+camera = NodePath("../CameraController")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("3_e61ug")
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="control_stat_changed" from="GameController" to="CanvasLayer" method="_on_game_controller_control_stat_changed"]
+
+[editable path="CameraController"]

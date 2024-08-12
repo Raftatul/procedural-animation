@@ -1,0 +1,132 @@
+[gd_scene load_steps=12 format=3 uid="uid://ryqqjm6icw6n"]
+
+[ext_resource type="Script" path="res://tmp/platform.gd" id="1_d8mom"]
+[ext_resource type="PackedScene" uid="uid://ccrs7ay68gw60" path="res://scenes/house_components/robot_leg.tscn" id="1_i1ofw"]
+[ext_resource type="Script" path="res://scripts/procedural_animation/step_ray.gd" id="3_56i20"]
+[ext_resource type="Script" path="res://scripts/procedural_animation/step_target_container.gd" id="3_uxtip"]
+[ext_resource type="Script" path="res://scripts/controllers/house_controller.gd" id="5_r5ij4"]
+[ext_resource type="PackedScene" uid="uid://c4e3gho1nk0tf" path="res://scenes/camera_controller.tscn" id="6_3d05v"]
+[ext_resource type="Script" path="res://scripts/interactable.gd" id="7_nj3ml"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_r6o8g"]
+points = PackedVector3Array(-2.05556, -0.180556, -3.55486, 2.05556, 0.152778, 3.55486, 2.05556, -0.180556, 3.55486, 2.05556, 0.152778, -3.55486, -2.05556, 0.152778, 3.55486, -2.05556, -0.180556, 3.55486, 2.05556, -0.180556, -3.55486, -2.05556, 0.152778, -3.55486)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vmpwy"]
+size = Vector3(4, 0.25, 7)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ltae8"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lrh4v"]
+size = Vector3(4.00098, 1.98584, 7.04199)
+
+[node name="Platform" type="CharacterBody3D"]
+collision_layer = 2
+script = ExtResource("1_d8mom")
+height_offset = 2.0
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_r6o8g")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_vmpwy")
+
+[node name="FrontLeftLeg" parent="." instance=ExtResource("1_i1ofw")]
+transform = Transform3D(0.330939, 0, 0, 0, 0.330939, 0, 0, 0, 0.330939, 2, -3, 3)
+
+[node name="Marker3D" parent="FrontLeftLeg" index="1" node_paths=PackedStringArray("step_target", "adjacent_target", "opposite_target")]
+step_target = NodePath("../../StepTargetContainer/FrontLeftRay/FrontLeftRayStepTarget")
+adjacent_target = NodePath("../../FrontRightLeg/Marker3D")
+opposite_target = NodePath("../../BackRightLeg/Marker3D")
+
+[node name="FrontRightLeg" parent="." instance=ExtResource("1_i1ofw")]
+transform = Transform3D(0.330939, 0, 0, 0, 0.330939, 0, 0, 0, 0.330939, -2, -3, 3)
+
+[node name="Marker3D" parent="FrontRightLeg" index="1" node_paths=PackedStringArray("step_target", "adjacent_target", "opposite_target")]
+step_target = NodePath("../../StepTargetContainer/FrontRightRay/FrontRightStepTarget")
+adjacent_target = NodePath("../../FrontLeftLeg/Marker3D")
+opposite_target = NodePath("../../BackLeftLeg/Marker3D")
+
+[node name="BackLeftLeg" parent="." instance=ExtResource("1_i1ofw")]
+transform = Transform3D(0.330939, 0, 0, 0, 0.330939, 0, 0, 0, 0.330939, 2, -3, -3)
+
+[node name="Marker3D" parent="BackLeftLeg" index="1" node_paths=PackedStringArray("step_target", "adjacent_target", "opposite_target")]
+step_target = NodePath("../../StepTargetContainer/BackLeftRay/BackLeftStepTarget")
+adjacent_target = NodePath("../../BackRightLeg/Marker3D")
+opposite_target = NodePath("../../FrontRightLeg/Marker3D")
+
+[node name="BackRightLeg" parent="." instance=ExtResource("1_i1ofw")]
+transform = Transform3D(0.330939, 0, 0, 0, 0.330939, 0, 0, 0, 0.330939, -2, -3, -3)
+
+[node name="Marker3D" parent="BackRightLeg" index="1" node_paths=PackedStringArray("step_target", "adjacent_target", "opposite_target")]
+step_target = NodePath("../../StepTargetContainer/BackRightRay/BackRightStepTarget")
+adjacent_target = NodePath("../../BackLeftLeg/Marker3D")
+opposite_target = NodePath("../../FrontLeftLeg/Marker3D")
+
+[node name="StepTargetContainer" type="Node3D" parent="."]
+script = ExtResource("3_uxtip")
+
+[node name="FrontLeftRay" type="RayCast3D" parent="StepTargetContainer" node_paths=PackedStringArray("step_target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 3)
+target_position = Vector3(0, -7, 0)
+script = ExtResource("3_56i20")
+step_target = NodePath("FrontLeftRayStepTarget")
+max_angle = 0.0
+
+[node name="FrontLeftRayStepTarget" type="Marker3D" parent="StepTargetContainer/FrontLeftRay"]
+
+[node name="FrontRightRay" type="RayCast3D" parent="StepTargetContainer" node_paths=PackedStringArray("step_target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, 3)
+target_position = Vector3(0, -7, 0)
+script = ExtResource("3_56i20")
+step_target = NodePath("FrontRightStepTarget")
+max_angle = 0.0
+
+[node name="FrontRightStepTarget" type="Marker3D" parent="StepTargetContainer/FrontRightRay"]
+
+[node name="BackLeftRay" type="RayCast3D" parent="StepTargetContainer" node_paths=PackedStringArray("step_target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, -3)
+target_position = Vector3(0, -7, 0)
+script = ExtResource("3_56i20")
+step_target = NodePath("BackLeftStepTarget")
+max_angle = 0.0
+
+[node name="BackLeftStepTarget" type="Marker3D" parent="StepTargetContainer/BackLeftRay"]
+
+[node name="BackRightRay" type="RayCast3D" parent="StepTargetContainer" node_paths=PackedStringArray("step_target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, -3)
+target_position = Vector3(0, -7, 0)
+script = ExtResource("3_56i20")
+step_target = NodePath("BackRightStepTarget")
+max_angle = 0.0
+
+[node name="BackRightStepTarget" type="Marker3D" parent="StepTargetContainer/BackRightRay"]
+
+[node name="CameraController" parent="." instance=ExtResource("6_3d05v")]
+arm_length = 10.0
+max_x_angle = 60.0
+max_y_angle = 60.0
+
+[node name="SpringArm3D" parent="CameraController" index="0"]
+shape = SubResource("CapsuleShape3D_ltae8")
+spring_length = 10.0
+
+[node name="ControllerInteraction" type="Area3D" parent="."]
+script = ExtResource("7_nj3ml")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ControllerInteraction"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.809326, 0)
+shape = SubResource("BoxShape3D_lrh4v")
+
+[node name="GameController" type="Node" parent="." node_paths=PackedStringArray("body", "camera")]
+script = ExtResource("5_r5ij4")
+body = NodePath("..")
+turn_speed = 0.5
+camera = NodePath("../CameraController")
+
+[connection signal="interacted" from="ControllerInteraction" to="GameController" method="_on_controller_interaction_interacted"]
+
+[editable path="FrontLeftLeg"]
+[editable path="FrontRightLeg"]
+[editable path="BackLeftLeg"]
+[editable path="BackRightLeg"]
+[editable path="CameraController"]

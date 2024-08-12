@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4e3gho1nk0tf"]
+
+[ext_resource type="Script" path="res://scripts/camera_controller.gd" id="1_skayv"]
+
+[node name="CameraController" type="Node3D" node_paths=PackedStringArray("spring_arm_3d", "camera_3d")]
+script = ExtResource("1_skayv")
+sensitivity = 0.01
+spring_arm_3d = NodePath("SpringArm3D")
+camera_3d = NodePath("SpringArm3D/Camera3D")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="."]
+spring_length = 0.0
+
+[node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
