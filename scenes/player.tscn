@@ -22,6 +22,10 @@ mesh = SubResource("CapsuleMesh_nbws8")
 
 [node name="CameraController" parent="." instance=ExtResource("2_26mnk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+arm_length = 0.0
+
+[node name="SpringArm3D" parent="CameraController" index="0"]
+spring_length = 0.0
 
 [node name="RayCast3D" type="RayCast3D" parent="CameraController/SpringArm3D" index="1"]
 target_position = Vector3(0, 0, -2)
