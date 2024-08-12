@@ -34,11 +34,12 @@ tip_bone = &"Bone.002"
 override_tip_basis = false
 use_magnet = true
 magnet = Vector3(0, 0, 1)
-target_node = NodePath("../../../Marker3D")
+target_node = NodePath("../../../IKTarget")
 max_iterations = 3
 
-[node name="Marker3D" type="RigidBody3D" parent="." index="1"]
+[node name="IKTarget" type="RigidBody3D" parent="." index="1"]
 top_level = true
+collision_layer = 0
 axis_lock_linear_x = true
 axis_lock_linear_z = true
 axis_lock_angular_x = true
@@ -48,5 +49,5 @@ script = ExtResource("3_077sx")
 front_step_distance = 2.0
 step_height = 5.0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Marker3D" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="IKTarget" index="0"]
 shape = SubResource("SphereShape3D_p1uy6")

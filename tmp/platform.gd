@@ -3,11 +3,11 @@ extends Node3D
 @export var height_offset := 1.0
 @export var speed := 5.0
 
-@onready var fl_leg: IKTarget = $FrontLeftLeg/Marker3D
-@onready var fr_leg: IKTarget = $FrontRightLeg/Marker3D
+@onready var fl_leg: IKTarget = $Legs/FrontLeftLeg/IKTarget
+@onready var fr_leg: IKTarget = $Legs/FrontRightLeg/IKTarget
 
-@onready var bl_leg: IKTarget = $BackLeftLeg/Marker3D
-@onready var br_leg: IKTarget = $BackRightLeg/Marker3D
+@onready var bl_leg: IKTarget = $Legs/BackLeftLeg/IKTarget
+@onready var br_leg: IKTarget = $Legs/BackRightLeg/IKTarget
 
 
 func _physics_process(delta: float) -> void:

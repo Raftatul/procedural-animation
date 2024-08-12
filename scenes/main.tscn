@@ -170,42 +170,6 @@ autoplay = "new_animation"
 [node name="Platform" parent="." instance=ExtResource("4_7m5lr")]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0.417562, 6.28567, 17.4254)
 
-[node name="Cube_002" parent="Platform/FrontLeftLeg/Armature/Skeleton3D" index="0"]
-transform = Transform3D(1, 7.33884e-08, -1.81773e-07, -1.81434e-07, 1, 3.8743e-07, 3.59507e-07, -2.83122e-07, 1, 1.866e-07, -8.31238, -0.661397)
-
-[node name="Cube_001" parent="Platform/FrontLeftLeg/Armature/Skeleton3D" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.45058e-09, -6.32819, -7.45058e-09)
-
-[node name="Cube" parent="Platform/FrontLeftLeg/Armature/Skeleton3D" index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.39246, 0)
-
-[node name="Cube_002" parent="Platform/FrontRightLeg/Armature/Skeleton3D" index="0"]
-transform = Transform3D(1, 7.33884e-08, -1.81773e-07, -1.81434e-07, 1, 3.8743e-07, 3.59507e-07, -2.83122e-07, 1, 1.866e-07, -8.31238, -0.661397)
-
-[node name="Cube_001" parent="Platform/FrontRightLeg/Armature/Skeleton3D" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.45058e-09, -6.32819, -7.45058e-09)
-
-[node name="Cube" parent="Platform/FrontRightLeg/Armature/Skeleton3D" index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.39246, 0)
-
-[node name="Cube_002" parent="Platform/BackLeftLeg/Armature/Skeleton3D" index="0"]
-transform = Transform3D(1, 7.33884e-08, -1.81773e-07, -1.81434e-07, 1, 3.8743e-07, 3.59507e-07, -2.83122e-07, 1, 1.866e-07, -8.31238, -0.661397)
-
-[node name="Cube_001" parent="Platform/BackLeftLeg/Armature/Skeleton3D" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.45058e-09, -6.32819, -7.45058e-09)
-
-[node name="Cube" parent="Platform/BackLeftLeg/Armature/Skeleton3D" index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.39246, 0)
-
-[node name="Cube_002" parent="Platform/BackRightLeg/Armature/Skeleton3D" index="0"]
-transform = Transform3D(1, 7.33884e-08, -1.81773e-07, -1.81434e-07, 1, 3.8743e-07, 3.59507e-07, -2.83122e-07, 1, 1.866e-07, -8.31238, -0.661397)
-
-[node name="Cube_001" parent="Platform/BackRightLeg/Armature/Skeleton3D" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.45058e-09, -6.32819, -7.45058e-09)
-
-[node name="Cube" parent="Platform/BackRightLeg/Armature/Skeleton3D" index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.39246, 0)
-
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5494, 0, 2.78412)
 use_collision = true
