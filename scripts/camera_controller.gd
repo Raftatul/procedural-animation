@@ -9,6 +9,8 @@ extends Node3D
 		arm_length = value
 		spring_arm_3d.spring_length = value
 
+@export var move_speed := 1.0
+
 @export var spring_arm_3d: SpringArm3D
 @export var camera_3d: Camera3D
 
