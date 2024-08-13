@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ryqqjm6icw6n"]
+[gd_scene load_steps=14 format=3 uid="uid://ryqqjm6icw6n"]
 
 [ext_resource type="Script" path="res://tmp/platform.gd" id="1_d8mom"]
 [ext_resource type="PackedScene" uid="uid://ccrs7ay68gw60" path="res://scenes/house_components/robot_leg.tscn" id="1_i1ofw"]
@@ -7,11 +7,20 @@
 [ext_resource type="Script" path="res://scripts/controllers/house_controller.gd" id="5_r5ij4"]
 [ext_resource type="PackedScene" uid="uid://c4e3gho1nk0tf" path="res://scenes/camera_controller.tscn" id="6_3d05v"]
 [ext_resource type="Script" path="res://scripts/interactable.gd" id="7_nj3ml"]
+[ext_resource type="Script" path="res://scripts/camera_lerp.gd" id="8_k7p2m"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_r6o8g"]
 points = PackedVector3Array(-2.05556, -0.180556, -3.55486, 2.05556, 0.152778, 3.55486, 2.05556, -0.180556, 3.55486, 2.05556, 0.152778, -3.55486, -2.05556, 0.152778, 3.55486, -2.05556, -0.180556, 3.55486, 2.05556, -0.180556, -3.55486, -2.05556, 0.152778, -3.55486)
 
 [sub_resource type="BoxMesh" id="BoxMesh_vmpwy"]
+size = Vector3(4, 0.25, 7)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nckoa"]
+transparency = 1
+albedo_color = Color(0, 1, 0, 0.501961)
+
+[sub_resource type="BoxMesh" id="BoxMesh_oxxy8"]
+material = SubResource("StandardMaterial3D_nckoa")
 size = Vector3(4, 0.25, 7)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lrh4v"]
@@ -65,49 +74,46 @@ opposite_target = NodePath("../../FrontLeftLeg/IKTarget")
 
 [node name="StepTargetContainer" type="Node3D" parent="."]
 script = ExtResource("3_uxtip")
+offset = 10.0
 
 [node name="FrontLeftRay" type="RayCast3D" parent="StepTargetContainer" node_paths=PackedStringArray("step_target")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -3)
-target_position = Vector3(0, -4, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9, 0, -2.9)
+target_position = Vector3(-0.1, -4, -0.1)
+hit_from_inside = true
 script = ExtResource("3_56i20")
 step_target = NodePath("FrontLeftRayStepTarget")
 
 [node name="FrontLeftRayStepTarget" type="Marker3D" parent="StepTargetContainer/FrontLeftRay"]
 
 [node name="FrontRightRay" type="RayCast3D" parent="StepTargetContainer" node_paths=PackedStringArray("step_target")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -3)
-target_position = Vector3(0, -4, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9, 0, -2.9)
+target_position = Vector3(0.1, -4, -0.1)
+hit_from_inside = true
 script = ExtResource("3_56i20")
 step_target = NodePath("FrontRightStepTarget")
 
 [node name="FrontRightStepTarget" type="Marker3D" parent="StepTargetContainer/FrontRightRay"]
 
 [node name="BackLeftRay" type="RayCast3D" parent="StepTargetContainer" node_paths=PackedStringArray("step_target")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 3)
-target_position = Vector3(0, -4, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9, 0, 2.9)
+target_position = Vector3(-0.1, -4, 0.1)
+hit_from_inside = true
 script = ExtResource("3_56i20")
 step_target = NodePath("BackLeftStepTarget")
 
 [node name="BackLeftStepTarget" type="Marker3D" parent="StepTargetContainer/BackLeftRay"]
 
 [node name="BackRightRay" type="RayCast3D" parent="StepTargetContainer" node_paths=PackedStringArray("step_target")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 3)
-target_position = Vector3(0, -4, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9, 0, 2.9)
+target_position = Vector3(0.1, -4, 0.1)
+hit_from_inside = true
 script = ExtResource("3_56i20")
 step_target = NodePath("BackRightStepTarget")
 
 [node name="BackRightStepTarget" type="Marker3D" parent="StepTargetContainer/BackRightRay"]
 
-[node name="CameraController" parent="." instance=ExtResource("6_3d05v")]
-arm_length = 10.0
-max_x_angle = 60.0
-max_y_angle = 60.0
-
-[node name="SpringArm3D" parent="CameraController" index="0"]
-spring_length = 10.0
-
-[node name="Camera3D" parent="CameraController/SpringArm3D" index="0"]
-current = true
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StepTargetContainer"]
+mesh = SubResource("BoxMesh_oxxy8")
 
 [node name="ControllerInteraction" type="Area3D" parent="."]
 script = ExtResource("7_nj3ml")
@@ -119,8 +125,27 @@ shape = SubResource("BoxShape3D_lrh4v")
 [node name="GameController" type="Node" parent="." node_paths=PackedStringArray("body", "camera")]
 script = ExtResource("5_r5ij4")
 body = NodePath("..")
+speed = 100.0
 turn_speed = 0.5
 camera = NodePath("../CameraController")
+
+[node name="CameraController" parent="." instance=ExtResource("6_3d05v")]
+top_level = true
+arm_length = 10.0
+
+[node name="SpringArm3D" parent="CameraController" index="0"]
+spring_length = 10.0
+
+[node name="Camera3D" parent="CameraController/SpringArm3D" index="0"]
+current = true
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="."]
+top_level = true
+remote_path = NodePath("../CameraController")
+update_rotation = false
+update_scale = false
+script = ExtResource("8_k7p2m")
+speed = 0.05
 
 [connection signal="interacted" from="ControllerInteraction" to="GameController" method="_on_controller_interaction_interacted"]
 

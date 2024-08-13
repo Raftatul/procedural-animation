@@ -40,7 +40,7 @@ top_level = true
 script = ExtResource("3_077sx")
 ray = NodePath("RayCast3D")
 front_step_distance = 2.0
-step_height = 2.0
+step_height = 3.0
 
 [node name="RemoteTransform3D" type="RemoteTransform3D" parent="IKTarget" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

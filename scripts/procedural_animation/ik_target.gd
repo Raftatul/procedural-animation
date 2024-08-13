@@ -2,6 +2,8 @@ class_name IKTarget
 extends Marker3D
 
 
+enum MOVEMENT_MODE {WALK, RUN}
+
 const RAY_LENGTH = 1000
 
 @export var step_target: Node3D
@@ -17,18 +19,21 @@ const RAY_LENGTH = 1000
 @export var tween_speed := 0.1
 
 var is_stepping := false
+var movement_mode := MOVEMENT_MODE.WALK
 
 
 func _process(_delta: float) -> void:
 	var hit_point = ray.get_collision_point()
-	if hit_point and not is_stepping:
+	if hit_point and !is_stepping:
 		global_position = hit_point
 
 
 func _physics_process(_delta: float) -> void:
-	if !is_stepping and !adjacent_target.is_stepping and abs(global_position.distance_to(step_target.global_position)) > front_step_distance:
-		step()
-		opposite_target.step()
+	match movement_mode:
+		MOVEMENT_MODE.WALK:
+			_handle_walk_mode()
+		MOVEMENT_MODE.RUN:
+			_handle_run_mode()
 
 
 func step() -> void:
@@ -42,3 +47,15 @@ func step() -> void:
 	t.tween_property(self, "global_position", half_way + owner.global_basis.y * step_height, tween_speed)
 	t.tween_property(self, "global_position", target_pos, tween_speed)
 	t.tween_callback(func(): is_stepping = false)
+
+
+func _handle_walk_mode() -> void:
+	if !is_stepping and !adjacent_target.is_stepping and abs(global_position.distance_to(step_target.global_position)) > front_step_distance:
+		step()
+		opposite_target.step()
+
+
+func _handle_run_mode() -> void:
+	if !is_stepping and !opposite_target.is_stepping and abs(global_position.distance_to(step_target.global_position)) > front_step_distance:
+		step()
+		adjacent_target.step()
