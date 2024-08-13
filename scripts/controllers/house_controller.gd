@@ -1,7 +1,7 @@
 extends GameController
 
 
-@export var body: CharacterBody3D
+@export var body: RigidBody3D
 @export var speed := 3.0
 @export var turn_speed := 3.0
 
@@ -49,10 +49,8 @@ func handle_movement(delta) -> void:
 	var input := Input.get_axis("ui_up", "ui_down")
 	var rot_input := Input.get_axis("ui_right", "ui_left")
 	
-	body.velocity = body.global_basis * Vector3(0, 0, input) * speed * delta
-	body.rotate_object_local(Vector3.UP, rot_input * turn_speed * delta)
-	
-	body.move_and_slide()
+	body.apply_central_force(input * body.global_basis.z * speed * delta)
+	body.apply_torque(rot_input * body.global_basis.y * turn_speed * delta)
 
 
 func _on_controller_interaction_interacted(controller: GameController) -> void:

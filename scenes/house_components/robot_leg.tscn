@@ -8,6 +8,7 @@
 process_priority = 1
 script = ExtResource("2_2pg4u")
 ik = NodePath("Armature/Skeleton3D/SkeletonIK3D")
+force = 6000.0
 
 [node name="Skeleton3D" parent="Armature" index="0"]
 bones/0/scale = Vector3(1, 1, 1)
@@ -39,7 +40,8 @@ max_iterations = 3
 top_level = true
 script = ExtResource("3_077sx")
 ray = NodePath("RayCast3D")
-front_step_distance = 2.0
+front_step_distance = 1.5
+step_height = 2.0
 
 [node name="RemoteTransform3D" type="RemoteTransform3D" parent="IKTarget" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -51,3 +53,14 @@ update_scale = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 top_level = true
 target_position = Vector3(0, -2, 0)
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, 0)
+remote_path = NodePath("../RayCast3D")
+update_rotation = false
+update_scale = false
+
+[node name="RayCast3D" type="RayCast3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, 0)
+top_level = true
+target_position = Vector3(0, -4, 0)

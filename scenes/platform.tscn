@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://ryqqjm6icw6n"]
+[gd_scene load_steps=12 format=3 uid="uid://ryqqjm6icw6n"]
 
 [ext_resource type="Script" path="res://tmp/platform.gd" id="1_d8mom"]
 [ext_resource type="PackedScene" uid="uid://ccrs7ay68gw60" path="res://scenes/house_components/robot_leg.tscn" id="1_i1ofw"]
@@ -8,31 +8,29 @@
 [ext_resource type="PackedScene" uid="uid://c4e3gho1nk0tf" path="res://scenes/camera_controller.tscn" id="6_3d05v"]
 [ext_resource type="Script" path="res://scripts/interactable.gd" id="7_nj3ml"]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_r6o8g"]
-points = PackedVector3Array(-2.05556, -0.180556, -3.55486, 2.05556, 0.152778, 3.55486, 2.05556, -0.180556, 3.55486, 2.05556, 0.152778, -3.55486, -2.05556, 0.152778, 3.55486, -2.05556, -0.180556, 3.55486, 2.05556, -0.180556, -3.55486, -2.05556, 0.152778, -3.55486)
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_rle3r"]
+friction = 0.0
 
-[sub_resource type="BoxMesh" id="BoxMesh_vmpwy"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_fan7y"]
 size = Vector3(4, 0.25, 7)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nckoa"]
-transparency = 1
-albedo_color = Color(0, 1, 0, 0.501961)
-
-[sub_resource type="BoxMesh" id="BoxMesh_oxxy8"]
-material = SubResource("StandardMaterial3D_nckoa")
+[sub_resource type="BoxMesh" id="BoxMesh_vmpwy"]
 size = Vector3(4, 0.25, 7)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lrh4v"]
 size = Vector3(4.00098, 1.98584, 7.04199)
 
-[node name="Platform" type="CharacterBody3D"]
+[node name="Platform" type="RigidBody3D"]
 collision_layer = 2
+mass = 20.0
+physics_material_override = SubResource("PhysicsMaterial_rle3r")
+linear_damp = 1.0
+angular_damp = 2.0
 script = ExtResource("1_d8mom")
 height_offset = 2.0
-speed = 20.0
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
-shape = SubResource("ConvexPolygonShape3D_r6o8g")
+shape = SubResource("BoxShape3D_fan7y")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_vmpwy")
@@ -47,6 +45,9 @@ step_target = NodePath("../../../StepTargetContainer/FrontLeftRay/FrontLeftRaySt
 adjacent_target = NodePath("../../FrontRightLeg/IKTarget")
 opposite_target = NodePath("../../BackRightLeg/IKTarget")
 
+[node name="RayCast3D" parent="Legs/FrontLeftLeg" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -0.021549, -3)
+
 [node name="FrontRightLeg" parent="Legs" instance=ExtResource("1_i1ofw")]
 transform = Transform3D(0.330939, 0, 0, 0, 0.330939, 0, 0, 0, 0.330939, 2, -3, -3)
 
@@ -54,6 +55,9 @@ transform = Transform3D(0.330939, 0, 0, 0, 0.330939, 0, 0, 0, 0.330939, 2, -3, -
 step_target = NodePath("../../../StepTargetContainer/FrontRightRay/FrontRightStepTarget")
 adjacent_target = NodePath("../../FrontLeftLeg/IKTarget")
 opposite_target = NodePath("../../BackLeftLeg/IKTarget")
+
+[node name="RayCast3D" parent="Legs/FrontRightLeg" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -0.021549, -3)
 
 [node name="BackLeftLeg" parent="Legs" instance=ExtResource("1_i1ofw")]
 transform = Transform3D(0.330939, 0, 0, 0, 0.330939, 0, 0, 0, 0.330939, -2, -3, 3)
@@ -63,6 +67,9 @@ step_target = NodePath("../../../StepTargetContainer/BackLeftRay/BackLeftStepTar
 adjacent_target = NodePath("../../BackRightLeg/IKTarget")
 opposite_target = NodePath("../../FrontRightLeg/IKTarget")
 
+[node name="RayCast3D" parent="Legs/BackLeftLeg" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -0.021549, 3)
+
 [node name="BackRightLeg" parent="Legs" instance=ExtResource("1_i1ofw")]
 transform = Transform3D(0.330939, 0, 0, 0, 0.330939, 0, 0, 0, 0.330939, 2, -3, 3)
 
@@ -71,48 +78,63 @@ step_target = NodePath("../../../StepTargetContainer/BackRightRay/BackRightStepT
 adjacent_target = NodePath("../../BackLeftLeg/IKTarget")
 opposite_target = NodePath("../../FrontLeftLeg/IKTarget")
 
+[node name="RayCast3D" parent="Legs/BackRightLeg" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -0.021549, 3)
+
 [node name="StepTargetContainer" type="Node3D" parent="."]
 script = ExtResource("3_uxtip")
-offset = 10.0
 
-[node name="FrontLeftRay" type="RayCast3D" parent="StepTargetContainer" node_paths=PackedStringArray("step_target")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9, 0, -2.9)
+[node name="FrontLeftRay" type="RayCast3D" parent="StepTargetContainer" node_paths=PackedStringArray("step_target", "reset_target") groups=["step_ray"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9, 0.605413, -2.9)
 target_position = Vector3(-0.1, -4, -0.1)
 hit_from_inside = true
 script = ExtResource("3_56i20")
 step_target = NodePath("FrontLeftRayStepTarget")
+reset_target = NodePath("ResetTarget")
 
 [node name="FrontLeftRayStepTarget" type="Marker3D" parent="StepTargetContainer/FrontLeftRay"]
 
-[node name="FrontRightRay" type="RayCast3D" parent="StepTargetContainer" node_paths=PackedStringArray("step_target")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9, 0, -2.9)
+[node name="ResetTarget" type="Marker3D" parent="StepTargetContainer/FrontLeftRay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.88613, 0)
+
+[node name="FrontRightRay" type="RayCast3D" parent="StepTargetContainer" node_paths=PackedStringArray("step_target", "reset_target") groups=["step_ray"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9, 0.605413, -2.9)
 target_position = Vector3(0.1, -4, -0.1)
 hit_from_inside = true
 script = ExtResource("3_56i20")
 step_target = NodePath("FrontRightStepTarget")
+reset_target = NodePath("ResetTarget")
 
 [node name="FrontRightStepTarget" type="Marker3D" parent="StepTargetContainer/FrontRightRay"]
 
-[node name="BackLeftRay" type="RayCast3D" parent="StepTargetContainer" node_paths=PackedStringArray("step_target")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9, 0, 2.9)
+[node name="ResetTarget" type="Marker3D" parent="StepTargetContainer/FrontRightRay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.88613, 0)
+
+[node name="BackLeftRay" type="RayCast3D" parent="StepTargetContainer" node_paths=PackedStringArray("step_target", "reset_target") groups=["step_ray"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9, 0.605413, 2.9)
 target_position = Vector3(-0.1, -4, 0.1)
 hit_from_inside = true
 script = ExtResource("3_56i20")
 step_target = NodePath("BackLeftStepTarget")
+reset_target = NodePath("ResetTarget")
 
 [node name="BackLeftStepTarget" type="Marker3D" parent="StepTargetContainer/BackLeftRay"]
 
-[node name="BackRightRay" type="RayCast3D" parent="StepTargetContainer" node_paths=PackedStringArray("step_target")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9, 0, 2.9)
+[node name="ResetTarget" type="Marker3D" parent="StepTargetContainer/BackLeftRay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.88613, 0)
+
+[node name="BackRightRay" type="RayCast3D" parent="StepTargetContainer" node_paths=PackedStringArray("step_target", "reset_target") groups=["step_ray"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9, 0.605413, 2.9)
 target_position = Vector3(0.1, -4, 0.1)
 hit_from_inside = true
 script = ExtResource("3_56i20")
 step_target = NodePath("BackRightStepTarget")
+reset_target = NodePath("ResetTarget")
 
 [node name="BackRightStepTarget" type="Marker3D" parent="StepTargetContainer/BackRightRay"]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StepTargetContainer"]
-mesh = SubResource("BoxMesh_oxxy8")
+[node name="ResetTarget" type="Marker3D" parent="StepTargetContainer/BackRightRay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.88613, 0)
 
 [node name="ControllerInteraction" type="Area3D" parent="."]
 script = ExtResource("7_nj3ml")
@@ -128,8 +150,8 @@ move_speed = 3.0
 [node name="GameController" type="Node" parent="." node_paths=PackedStringArray("body", "camera")]
 script = ExtResource("5_r5ij4")
 body = NodePath("..")
-speed = 100.0
-turn_speed = 0.5
+speed = 5000.0
+turn_speed = 10000.0
 camera = NodePath("../Camera")
 
 [connection signal="interacted" from="ControllerInteraction" to="GameController" method="_on_controller_interaction_interacted"]

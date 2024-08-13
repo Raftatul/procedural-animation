@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 DebugMenu="*res://addons/debug_menu/debug_menu.tscn"
+DebugInput="*res://scripts/debug_input.gd"
 
 [display]
 
@@ -25,7 +26,7 @@ window/stretch/mode="viewport"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/debug_menu/plugin.cfg")
+enabled=PackedStringArray("res://addons/debug_menu/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
 
 [input]
 
