@@ -7,9 +7,9 @@ height = 1.0
 
 [node name="CameraController" type="Node3D" node_paths=PackedStringArray("spring_arm_3d", "camera_3d")]
 script = ExtResource("1_skayv")
-sensitivity = 0.01
 spring_arm_3d = NodePath("SpringArm3D")
 camera_3d = NodePath("SpringArm3D/Camera3D")
+sensitivity = 0.01
 
 [node name="SpringArm3D" type="SpringArm3D" parent="."]
 shape = SubResource("CapsuleShape3D_sg2ps")

@@ -3,16 +3,18 @@ class_name CameraController
 extends Node3D
 
 
+@export var spring_arm_3d: SpringArm3D
+@export var camera_3d: Camera3D
+
+@export_group("Parameters")
 @export var sensitivity := 1.0
 @export var arm_length := 1.0:
 	set(value):
 		arm_length = value
 		spring_arm_3d.spring_length = value
 
-@export var move_speed := 1.0
-
-@export var spring_arm_3d: SpringArm3D
-@export var camera_3d: Camera3D
+##Define the movement speed of the camera, 0 is instante movement
+@export var move_speed := 0.0
 
 ##Define the max angle in the local x axis, 0 is no limit
 @export_range(0, 180) var max_x_angle := 90.0
@@ -20,8 +22,21 @@ extends Node3D
 ##Define the max angle in the local y axis, 0 is no limit
 @export_range(0, 180) var max_y_angle := 0.0
 
+var initial_pos := Vector3.ZERO
+
+
+func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+	
+	initial_pos = position
+	top_level = true
+
 
 func _unhandled_input(event: InputEvent) -> void:
+	if Engine.is_editor_hint():
+		return
+	
 	if not camera_3d.current:
 		return
 		
@@ -35,3 +50,15 @@ func _unhandled_input(event: InputEvent) -> void:
 		spring_arm_3d.rotate_x(movement.y)
 		if max_x_angle != 0.0:
 			spring_arm_3d.rotation_degrees.x = clamp(spring_arm_3d.rotation_degrees.x, -max_x_angle, max_x_angle)
+
+
+func _process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		return
+	
+	var target_pos = owner.global_position + initial_pos
+	
+	if move_speed == 0:
+		global_position = target_pos
+	else:
+		global_position = global_position.lerp(target_pos, move_speed * delta)

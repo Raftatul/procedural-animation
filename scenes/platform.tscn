@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://ryqqjm6icw6n"]
+[gd_scene load_steps=13 format=3 uid="uid://ryqqjm6icw6n"]
 
 [ext_resource type="Script" path="res://tmp/platform.gd" id="1_d8mom"]
 [ext_resource type="PackedScene" uid="uid://ccrs7ay68gw60" path="res://scenes/house_components/robot_leg.tscn" id="1_i1ofw"]
@@ -7,7 +7,6 @@
 [ext_resource type="Script" path="res://scripts/controllers/house_controller.gd" id="5_r5ij4"]
 [ext_resource type="PackedScene" uid="uid://c4e3gho1nk0tf" path="res://scenes/camera_controller.tscn" id="6_3d05v"]
 [ext_resource type="Script" path="res://scripts/interactable.gd" id="7_nj3ml"]
-[ext_resource type="Script" path="res://scripts/camera_lerp.gd" id="8_k7p2m"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_r6o8g"]
 points = PackedVector3Array(-2.05556, -0.180556, -3.55486, 2.05556, 0.152778, 3.55486, 2.05556, -0.180556, 3.55486, 2.05556, 0.152778, -3.55486, -2.05556, 0.152778, 3.55486, -2.05556, -0.180556, 3.55486, 2.05556, -0.180556, -3.55486, -2.05556, 0.152778, -3.55486)
@@ -122,30 +121,16 @@ script = ExtResource("7_nj3ml")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.809326, 0)
 shape = SubResource("BoxShape3D_lrh4v")
 
+[node name="Camera" parent="." instance=ExtResource("6_3d05v")]
+arm_length = 10.0
+move_speed = 3.0
+
 [node name="GameController" type="Node" parent="." node_paths=PackedStringArray("body", "camera")]
 script = ExtResource("5_r5ij4")
 body = NodePath("..")
 speed = 100.0
 turn_speed = 0.5
-camera = NodePath("../CameraController")
-
-[node name="CameraController" parent="." instance=ExtResource("6_3d05v")]
-top_level = true
-arm_length = 10.0
-
-[node name="SpringArm3D" parent="CameraController" index="0"]
-spring_length = 10.0
-
-[node name="Camera3D" parent="CameraController/SpringArm3D" index="0"]
-current = true
-
-[node name="RemoteTransform3D" type="RemoteTransform3D" parent="."]
-top_level = true
-remote_path = NodePath("../CameraController")
-update_rotation = false
-update_scale = false
-script = ExtResource("8_k7p2m")
-speed = 0.05
+camera = NodePath("../Camera")
 
 [connection signal="interacted" from="ControllerInteraction" to="GameController" method="_on_controller_interaction_interacted"]
 
@@ -153,4 +138,3 @@ speed = 0.05
 [editable path="Legs/FrontRightLeg"]
 [editable path="Legs/BackLeftLeg"]
 [editable path="Legs/BackRightLeg"]
-[editable path="CameraController"]
