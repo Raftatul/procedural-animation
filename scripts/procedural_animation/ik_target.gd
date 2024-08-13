@@ -21,7 +21,7 @@ var is_stepping := false
 
 func _process(_delta: float) -> void:
 	var hit_point = ray.get_collision_point()
-	if hit_point:
+	if hit_point and not is_stepping:
 		global_position = hit_point
 
 
