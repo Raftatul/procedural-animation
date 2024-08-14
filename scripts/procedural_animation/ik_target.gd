@@ -4,14 +4,11 @@ extends Marker3D
 
 enum MOVEMENT_MODE {WALK, RUN}
 
-const RAY_LENGTH = 1000
-
 @export var step_target: Node3D
-@export var ray: RayCast3D
-
-@export_group("IKs")
 @export var adjacent_target: IKTarget
 @export var opposite_target: IKTarget
+
+@export var ray: RayCast3D
 
 @export_group("Parameters")
 @export var front_step_distance := 3.0

@@ -28,6 +28,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.45058e-09, -6.32819, -7.450
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.39246, 0)
 
 [node name="SkeletonIK3D" type="SkeletonIK3D" parent="Armature/Skeleton3D" index="3"]
+transform = Transform3D(0.991037, -0.0550526, -0.121716, 0.0844915, 0.964058, 0.251901, 0.103473, -0.259928, 0.960068, 0, 0, 0)
 root_bone = &"Bone"
 tip_bone = &"Bone.002"
 override_tip_basis = false
