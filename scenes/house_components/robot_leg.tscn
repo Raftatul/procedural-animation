@@ -40,28 +40,28 @@ max_iterations = 3
 [node name="IKTarget" type="Marker3D" parent="." index="1" node_paths=PackedStringArray("ray")]
 top_level = true
 script = ExtResource("3_077sx")
-ray = NodePath("RayCast3D")
+ray = NodePath("HeightRay")
 front_step_distance = 1.5
 step_height = 2.0
 
-[node name="RemoteTransform3D" type="RemoteTransform3D" parent="IKTarget" index="0"]
+[node name="HeightRayRemote" type="RemoteTransform3D" parent="IKTarget" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-remote_path = NodePath("../RayCast3D")
+remote_path = NodePath("../HeightRay")
 update_rotation = false
 update_scale = false
 
-[node name="RayCast3D" type="RayCast3D" parent="IKTarget" index="1"]
+[node name="HeightRay" type="RayCast3D" parent="IKTarget" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 top_level = true
 target_position = Vector3(0, -2, 0)
 
-[node name="RemoteTransform3D" type="RemoteTransform3D" parent="." index="2"]
+[node name="ForceRayRemote" type="RemoteTransform3D" parent="." index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, 0)
-remote_path = NodePath("../RayCast3D")
+remote_path = NodePath("../ForceRay")
 update_rotation = false
 update_scale = false
 
-[node name="RayCast3D" type="RayCast3D" parent="." index="3"]
+[node name="ForceRay" type="RayCast3D" parent="." index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, 0)
 top_level = true
 target_position = Vector3(0, -4, 0)

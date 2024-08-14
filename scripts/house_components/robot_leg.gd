@@ -5,7 +5,7 @@ extends Node3D
 
 @export var force := 1.0
 
-@onready var ray: RayCast3D = $RayCast3D
+@onready var ray: RayCast3D = $ForceRay
 
 
 func _ready() -> void:
