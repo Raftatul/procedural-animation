@@ -2,6 +2,8 @@ class_name IKTarget
 extends Marker3D
 
 
+signal target_reached
+
 enum MOVEMENT_MODE {WALK, RUN}
 
 @export var step_target: Node3D
@@ -63,6 +65,7 @@ func step() -> void:
 	t.tween_property(self, "global_position", half_way + owner.global_basis.y * step_height, tween_speed)
 	t.tween_property(self, "global_position", target_pos, tween_speed)
 	t.tween_callback(func(): is_stepping = false)
+	t.tween_callback(func(): target_reached.emit())
 
 
 func _handle_walk_mode() -> void:

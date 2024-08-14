@@ -1,8 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://ccrs7ay68gw60"]
+[gd_scene load_steps=9 format=3 uid="uid://ccrs7ay68gw60"]
 
 [ext_resource type="PackedScene" uid="uid://cp7wu7yo2w4t2" path="res://assets/meshs/robot_leg.glb" id="1_fbbr4"]
 [ext_resource type="Script" path="res://scripts/house_components/robot_leg.gd" id="2_2pg4u"]
 [ext_resource type="Script" path="res://scripts/procedural_animation/ik_target.gd" id="3_077sx"]
+[ext_resource type="AudioStream" uid="uid://bpf8cm0mscuhu" path="res://assets/audios/legs/metal_leg_step_in_dirt.wav" id="4_52p21"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t6usm"]
+vertex_color_use_as_albedo = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_q0q7t"]
+
+[sub_resource type="Curve" id="Curve_j74y2"]
+_data = [Vector2(0, 1), 0.0, -0.228233, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_3q5sb"]
+colors = PackedColorArray(0.318341, 0.157361, 1.44392e-07, 1, 1, 0.498039, 0, 1)
 
 [node name="robot_leg" node_paths=PackedStringArray("ik") instance=ExtResource("1_fbbr4")]
 process_priority = 1
@@ -65,3 +78,23 @@ update_scale = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, 0)
 top_level = true
 target_position = Vector3(0, -4, 0)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." index="4"]
+stream = ExtResource("4_52p21")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="." index="5"]
+material_override = SubResource("StandardMaterial3D_t6usm")
+emitting = false
+amount = 16
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+mesh = SubResource("SphereMesh_q0q7t")
+direction = Vector3(0, 1, 0)
+initial_velocity_min = 15.0
+initial_velocity_max = 20.0
+scale_amount_curve = SubResource("Curve_j74y2")
+color_initial_ramp = SubResource("Gradient_3q5sb")
+
+[connection signal="target_reached" from="IKTarget" to="AudioStreamPlayer3D" method="play"]
+[connection signal="target_reached" from="IKTarget" to="CPUParticles3D" method="restart"]

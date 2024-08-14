@@ -24,6 +24,10 @@ DebugInput="*res://scripts/debug_input.gd"
 
 window/stretch/mode="viewport"
 
+[editor]
+
+movie_writer/movie_file="D:/Godot_Projects/procedural-animation/tmp/procedural_animation.avi"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/debug_menu/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
