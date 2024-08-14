@@ -27,7 +27,6 @@ physics_material_override = SubResource("PhysicsMaterial_rle3r")
 linear_damp = 1.0
 angular_damp = 2.0
 script = ExtResource("1_d8mom")
-height_offset = 2.0
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_fan7y")

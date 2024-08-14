@@ -1,7 +1,7 @@
 extends Node3D
 
-@export var height_offset := 1.0
-@export var speed := 5.0
+#@export var height_offset := 1.0
+@export var align_speed := 5.0
 
 @onready var fl_leg: IKTarget = $Legs/FrontLeftLeg/IKTarget
 @onready var fr_leg: IKTarget = $Legs/FrontRightLeg/IKTarget
@@ -20,12 +20,12 @@ func _physics_process(delta: float) -> void:
 	var avg_normal = ((plane1.normal + plane2.normal) / 2.0).normalized()
 	var target_basis := _basis_from_normal(avg_normal)
 	
-	basis = lerp(basis, target_basis, speed * delta).orthonormalized()
+	basis = lerp(basis, target_basis, align_speed * delta).orthonormalized()
 	#
 	#var avg = (fl_leg.position + fr_leg.position + bl_leg.position + br_leg.position) / 4.0
 	#var target_pos = avg + basis.y * height_offset
 	#var distance := basis.y.dot(target_pos - position)
-	#position = lerp(position, position + basis.y * distance, speed * delta)
+	#position = lerp(position, position + basis.y * distance, align_speed * delta)
 
 
 func _basis_from_normal(normal: Vector3) -> Basis:
