@@ -41,7 +41,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 		
 	if event is InputEventMouseMotion:
-		var movement = -event.relative * sensitivity
+		var movement = -event.relative * sensitivity * get_process_delta_time()
 		
 		rotate_y(movement.x)
 		if max_y_angle != 0.0:

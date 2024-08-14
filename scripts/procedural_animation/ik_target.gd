@@ -24,18 +24,19 @@ var movement_mode := MOVEMENT_MODE.WALK
 
 
 func _process(_delta: float) -> void:
+	can_step = step_target.get_meta("is_on_ground", false)
+	
 	if !can_step:
 		return
 	
-	var hit_point = ray.get_collision_point()
-	
-	if hit_point and !is_stepping:
-		global_position = hit_point
+	if ray.is_colliding():
+		var hit_point = ray.get_collision_point()
+		
+		if !is_stepping:
+			global_position = hit_point
 
 
 func _physics_process(_delta: float) -> void:
-	can_step = step_target.get_meta("is_on_ground", false)
-	
 	if !can_step:
 		global_position = global_position.lerp(step_target.global_position, tween_speed)
 	

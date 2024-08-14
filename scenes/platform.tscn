@@ -45,7 +45,7 @@ step_target = NodePath("../../../StepTargetContainer/FrontLeftRay/FrontLeftRaySt
 adjacent_target = NodePath("../../FrontRightLeg/IKTarget")
 opposite_target = NodePath("../../BackRightLeg/IKTarget")
 
-[node name="RayCast3D" parent="Legs/FrontLeftLeg" index="3"]
+[node name="ForceRay" parent="Legs/FrontLeftLeg" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -0.021549, -3)
 
 [node name="FrontRightLeg" parent="Legs" instance=ExtResource("1_i1ofw")]
@@ -56,8 +56,11 @@ step_target = NodePath("../../../StepTargetContainer/FrontRightRay/FrontRightSte
 adjacent_target = NodePath("../../FrontLeftLeg/IKTarget")
 opposite_target = NodePath("../../BackLeftLeg/IKTarget")
 
-[node name="RayCast3D" parent="Legs/FrontRightLeg" index="3"]
+[node name="ForceRay" parent="Legs/FrontRightLeg" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -0.021549, -3)
+
+[node name="AudioStreamPlayer3D" parent="Legs/FrontRightLeg" index="4"]
+volume_db = -80.0
 
 [node name="BackLeftLeg" parent="Legs" instance=ExtResource("1_i1ofw")]
 transform = Transform3D(0.330939, 0, 0, 0, 0.330939, 0, 0, 0, 0.330939, -2, -3, 3)
@@ -67,7 +70,7 @@ step_target = NodePath("../../../StepTargetContainer/BackLeftRay/BackLeftStepTar
 adjacent_target = NodePath("../../BackRightLeg/IKTarget")
 opposite_target = NodePath("../../FrontRightLeg/IKTarget")
 
-[node name="RayCast3D" parent="Legs/BackLeftLeg" index="3"]
+[node name="ForceRay" parent="Legs/BackLeftLeg" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -0.021549, 3)
 
 [node name="BackRightLeg" parent="Legs" instance=ExtResource("1_i1ofw")]
@@ -78,8 +81,11 @@ step_target = NodePath("../../../StepTargetContainer/BackRightRay/BackRightStepT
 adjacent_target = NodePath("../../BackLeftLeg/IKTarget")
 opposite_target = NodePath("../../FrontLeftLeg/IKTarget")
 
-[node name="RayCast3D" parent="Legs/BackRightLeg" index="3"]
+[node name="ForceRay" parent="Legs/BackRightLeg" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -0.021549, 3)
+
+[node name="AudioStreamPlayer3D" parent="Legs/BackRightLeg" index="4"]
+volume_db = -80.0
 
 [node name="StepTargetContainer" type="Node3D" parent="."]
 script = ExtResource("3_uxtip")
