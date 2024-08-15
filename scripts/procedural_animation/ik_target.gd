@@ -6,21 +6,22 @@ signal target_reached
 
 enum MOVEMENT_MODE {WALK, RUN}
 
-@export var step_target: Node3D
-@export var adjacent_target: IKTarget
-@export var opposite_target: IKTarget
-
 @export var ray: RayCast3D
 
 @export_group("Parameters")
 @export var front_step_distance := 3.0
-@export var step_height := 1.0
 @export var tween_speed := 0.1
+
+var step_target: Node3D
+var adjacent_target: IKTarget
+var opposite_target: IKTarget
+
+var step_height := 1.0
+
+var movement_mode := MOVEMENT_MODE.WALK
 
 var is_stepping := false
 var can_step := false
-
-var movement_mode := MOVEMENT_MODE.WALK
 
 
 func _process(_delta: float) -> void:

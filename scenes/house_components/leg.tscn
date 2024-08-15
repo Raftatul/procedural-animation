@@ -1,0 +1,121 @@
+[gd_scene load_steps=11 format=3 uid="uid://yjtkyxk1jhdj"]
+
+[ext_resource type="PackedScene" uid="uid://cp7wu7yo2w4t2" path="res://assets/meshs/robot_leg.glb" id="1_if3ko"]
+[ext_resource type="Script" path="res://scripts/house_components/leg.gd" id="2_6a151"]
+[ext_resource type="Script" path="res://scripts/procedural_animation/ik_target.gd" id="3_3gb2p"]
+[ext_resource type="PackedScene" uid="uid://b2ocu8y16klsm" path="res://assets/meshs/mecha_leg.glb" id="3_qdkli"]
+[ext_resource type="AudioStream" uid="uid://bpf8cm0mscuhu" path="res://assets/audios/legs/metal_leg_step_in_dirt.wav" id="4_4n8yv"]
+[ext_resource type="Script" path="res://scripts/nodes/random_pitch_3D.gd" id="5_x38ng"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dh24g"]
+vertex_color_use_as_albedo = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_kbso3"]
+
+[sub_resource type="Curve" id="Curve_vivly"]
+_data = [Vector2(0, 1), 0.0, -0.228233, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_qrukj"]
+colors = PackedColorArray(0.318341, 0.157361, 1.44392e-07, 1, 1, 0.498039, 0, 1)
+
+[node name="Leg" type="Node3D" node_paths=PackedStringArray("ik", "ik_target")]
+script = ExtResource("2_6a151")
+ik = NodePath("mecha_leg/Armature/Skeleton3D/SkeletonIK3D")
+ik_target = NodePath("IKTarget")
+force = 6000.0
+step_height = 1.0
+
+[node name="robot_leg" parent="." instance=ExtResource("1_if3ko")]
+transform = Transform3D(0.33, 0, 0, 0, 0.33, 0, 0, 0, 0.33, 0, 0, 0)
+visible = false
+
+[node name="Cube_002" parent="robot_leg/Armature/Skeleton3D" index="0"]
+transform = Transform3D(1, -4.5821e-08, -6.25635e-08, 1.13044e-07, 1, -2.98023e-07, 6.84718e-08, 3.27826e-07, 1, 1.866e-07, -8.31238, -0.661397)
+
+[node name="Cube_001" parent="robot_leg/Armature/Skeleton3D" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.45058e-09, -6.32819, -7.45058e-09)
+
+[node name="Cube" parent="robot_leg/Armature/Skeleton3D" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.39246, 0)
+
+[node name="SkeletonIK3D" type="SkeletonIK3D" parent="robot_leg/Armature/Skeleton3D" index="3"]
+transform = Transform3D(0.991037, -0.0550526, -0.121716, 0.0844915, 0.964058, 0.251901, 0.103473, -0.259928, 0.960068, 0, 0, 0)
+root_bone = &"Bone"
+tip_bone = &"Bone.002"
+override_tip_basis = false
+use_magnet = true
+magnet = Vector3(0, 0, 1)
+target_node = NodePath("../../../../IKTarget")
+max_iterations = 3
+
+[node name="mecha_leg" parent="." instance=ExtResource("3_qdkli")]
+transform = Transform3D(0.33, 0, 0, 0, 0.33, 0, 0, 0, 0.33, 0, 0, 0)
+
+[node name="Cube_002" parent="mecha_leg/Armature/Skeleton3D" index="0"]
+transform = Transform3D(1, 1.44365e-07, -2.11608e-07, -1.42431e-07, 1, -2.98024e-08, 1.99733e-07, -4.92957e-14, 1, 7.96979e-08, -8.31238, -0.661398)
+
+[node name="Cube_001" parent="mecha_leg/Armature/Skeleton3D" index="1"]
+transform = Transform3D(1, 1.19209e-07, -8.25719e-08, -1.19209e-07, 1, -5.50479e-08, 3.57628e-07, 2.38419e-07, 0.230888, 2.51467e-14, -6.32819, -7.61829e-07)
+
+[node name="Cube" parent="mecha_leg/Armature/Skeleton3D" index="2"]
+transform = Transform3D(1, 1.19209e-07, -3.57628e-07, -1.19209e-07, 1, -2.38419e-07, 3.57628e-07, 2.38419e-07, 1, 8.49972e-15, -2.39246, -2.85204e-07)
+
+[node name="SkeletonIK3D" type="SkeletonIK3D" parent="mecha_leg/Armature/Skeleton3D" index="3"]
+transform = Transform3D(0.991037, -0.0550526, -0.121716, 0.0844915, 0.964058, 0.251901, 0.103473, -0.259928, 0.960068, 0, 0, 0)
+root_bone = &"Bone"
+tip_bone = &"Bone.002"
+override_tip_basis = false
+use_magnet = true
+magnet = Vector3(0, 0, 1)
+target_node = NodePath("../../../../IKTarget")
+max_iterations = 3
+
+[node name="IKTarget" type="Marker3D" parent="." node_paths=PackedStringArray("ray")]
+top_level = true
+script = ExtResource("3_3gb2p")
+ray = NodePath("HeightRay")
+front_step_distance = 1.5
+
+[node name="HeightRayRemote" type="RemoteTransform3D" parent="IKTarget"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+remote_path = NodePath("../HeightRay")
+update_rotation = false
+update_scale = false
+
+[node name="HeightRay" type="RayCast3D" parent="IKTarget"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+top_level = true
+target_position = Vector3(0, -2, 0)
+
+[node name="ForceRayRemote" type="RemoteTransform3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.75, 0)
+remote_path = NodePath("../ForceRay")
+update_rotation = false
+update_scale = false
+
+[node name="ForceRay" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.75, 0)
+top_level = true
+target_position = Vector3(0, -4, 0)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_4n8yv")
+script = ExtResource("5_x38ng")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+material_override = SubResource("StandardMaterial3D_dh24g")
+emitting = false
+amount = 16
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+mesh = SubResource("SphereMesh_kbso3")
+direction = Vector3(0, 1, 0)
+initial_velocity_min = 15.0
+initial_velocity_max = 20.0
+scale_amount_curve = SubResource("Curve_vivly")
+color_initial_ramp = SubResource("Gradient_qrukj")
+
+[editable path="robot_leg"]
+[editable path="mecha_leg"]

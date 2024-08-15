@@ -1,14 +1,26 @@
+class_name Leg
 extends Node3D
 
 
+@export var step_target: Node3D
+@export var adjacent_leg: Leg
+@export var opposite_leg: Leg
+
 @export var ik: SkeletonIK3D
+@export var ik_target: IKTarget
 
 @export var force := 1.0
+@export var step_height := 0.1
 
 @onready var ray: RayCast3D = $ForceRay
 
 
 func _ready() -> void:
+	ik_target.step_target = step_target
+	ik_target.adjacent_target = adjacent_leg.ik_target
+	ik_target.opposite_target = opposite_leg.ik_target
+	ik_target.step_height = step_height
+	
 	ik.start()
 
 

@@ -42,19 +42,15 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 	if event is InputEventMouseMotion:
 		var movement = -event.relative * sensitivity * get_process_delta_time()
-		
-		rotate_y(movement.x)
-		if max_y_angle != 0.0:
-			rotation_degrees.y = clamp(rotation_degrees.y, - max_y_angle, max_y_angle)
-		
-		spring_arm_3d.rotate_x(movement.y)
-		if max_x_angle != 0.0:
-			spring_arm_3d.rotation_degrees.x = clamp(spring_arm_3d.rotation_degrees.x, -max_x_angle, max_x_angle)
+		_rotate_camera(movement)
 
 
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
+	
+	var movement := Input.get_vector("camera_right", "camera_left", "camera_down", "camera_up") * delta
+	_rotate_camera(movement)
 	
 	var target_pos = owner.global_position + initial_pos
 	
@@ -62,3 +58,13 @@ func _process(delta: float) -> void:
 		global_position = target_pos
 	else:
 		global_position = global_position.lerp(target_pos, move_speed * delta)
+
+
+func _rotate_camera(movement: Vector2) -> void:
+	rotate_y(movement.x)
+	if max_y_angle != 0.0:
+		rotation_degrees.y = clamp(rotation_degrees.y, - max_y_angle, max_y_angle)
+	
+	spring_arm_3d.rotate_x(movement.y)
+	if max_x_angle != 0.0:
+		spring_arm_3d.rotation_degrees.x = clamp(spring_arm_3d.rotation_degrees.x, -max_x_angle, max_x_angle)

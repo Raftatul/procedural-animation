@@ -1,9 +1,10 @@
-[gd_scene load_steps=19 format=3 uid="uid://dspx7w6gvjfkp"]
+[gd_scene load_steps=20 format=3 uid="uid://dspx7w6gvjfkp"]
 
 [ext_resource type="Terrain3DStorage" uid="uid://bia66f27txaq5" path="res://ressources/terrain/main.res" id="1_lxees"]
 [ext_resource type="PackedScene" uid="uid://0b1c80okyjud" path="res://scenes/grass.tscn" id="2_kye2q"]
 [ext_resource type="PackedScene" uid="uid://ryqqjm6icw6n" path="res://scenes/platform.tscn" id="4_7m5lr"]
 [ext_resource type="PackedScene" uid="uid://boevprdry0308" path="res://scenes/player.tscn" id="4_xoo4e"]
+[ext_resource type="PackedScene" uid="uid://bx7hts6huuyr3" path="res://scenes/ball.tscn" id="5_r11q0"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_r2wjf"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -78,35 +79,8 @@ scene_file = ExtResource("2_kye2q")
 [sub_resource type="Terrain3DAssets" id="Terrain3DAssets_050dm"]
 mesh_list = Array[Terrain3DMeshAsset]([SubResource("Terrain3DMeshAsset_uwmxo"), SubResource("Terrain3DMeshAsset_j4u7b")])
 
-[sub_resource type="Animation" id="Animation_oat8t"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(-15.6328, 0, 12.7615)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_a20iq"]
-resource_name = "new_animation"
+[sub_resource type="Animation" id="Animation_3m466"]
+resource_name = "s"
 length = 2.0
 loop_mode = 1
 tracks/0/type = "value"
@@ -119,25 +93,28 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 1, 2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector3(-15.6328, 0, 12.7615), Vector3(-15.633, 2, 12.762), Vector3(-15.6328, 0, 12.7615)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
+"values": [Vector3(-12.567, 1, 24.695), Vector3(-12.5674, 0, 24.6951), Vector3(-12.567, 1, 24.695)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ptmim"]
+[sub_resource type="Animation" id="Animation_ai1ce"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-12.5674, 0, 24.6951)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nj5s7"]
 _data = {
-"RESET": SubResource("Animation_oat8t"),
-"new_animation": SubResource("Animation_a20iq")
+"RESET": SubResource("Animation_ai1ce"),
+"s": SubResource("Animation_3m466")
 }
 
 [node name="Main" type="Node"]
@@ -156,36 +133,31 @@ storage = ExtResource("1_lxees")
 material = SubResource("Terrain3DMaterial_ufbkk")
 assets = SubResource("Terrain3DAssets_050dm")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="World"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.6328, 0, 12.7615)
-use_collision = true
-size = Vector3(5, 0.3, 5)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="World/CSGBox3D"]
-libraries = {
-"": SubResource("AnimationLibrary_ptmim")
-}
-autoplay = "new_animation"
-
 [node name="Platform" parent="." instance=ExtResource("4_7m5lr")]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0.417562, 2.93052, 17.4254)
 
-[node name="ForceRay" parent="Platform/Legs/FrontLeftLeg" index="3"]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 2.41756, 2.90897, 20.4254)
+[node name="ForceRay" parent="Platform/Legs/FrontLeftLeg" index="4"]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 2.41756, 2.68052, 20.4254)
 
-[node name="ForceRay" parent="Platform/Legs/FrontRightLeg" index="3"]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -1.58244, 2.90897, 20.4254)
+[node name="ForceRay" parent="Platform/Legs/FrontRightLeg" index="4"]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -1.58244, 2.68052, 20.4254)
 
-[node name="ForceRay" parent="Platform/Legs/BackLeftLeg" index="3"]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 2.41756, 2.90897, 14.4254)
+[node name="ForceRay" parent="Platform/Legs/BackLeftLeg" index="4"]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 2.41756, 2.68052, 14.4254)
 
-[node name="ForceRay" parent="Platform/Legs/BackRightLeg" index="3"]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -1.58244, 2.90897, 14.4254)
+[node name="ForceRay" parent="Platform/Legs/BackRightLeg" index="4"]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -1.58244, 2.68052, 14.4254)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5494, 0, 2.78412)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5674, 0, 24.6951)
 use_collision = true
-size = Vector3(9.87207, 0.311523, 15.9471)
+size = Vector3(5, 0.25, 5)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CSGBox3D"]
+libraries = {
+"": SubResource("AnimationLibrary_nj5s7")
+}
+autoplay = "s"
 
 [node name="CSGBox3D4" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.576, 9.01449, 2.78412)
@@ -203,12 +175,35 @@ use_collision = true
 size = Vector3(14.9141, 0.311523, 15.9471)
 
 [node name="CharacterBody3D" parent="." instance=ExtResource("4_xoo4e")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -12.0802, 1.35069, 13.6575)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -12.0802, 4.55916, 13.6575)
+
+[node name="Ball" parent="." instance=ExtResource("5_r11q0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.938043, 3.7765, 15.4954)
+
+[node name="Ball2" parent="." instance=ExtResource("5_r11q0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.938043, 3.7765, 17.3009)
+
+[node name="Ball3" parent="." instance=ExtResource("5_r11q0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.938043, 3.7765, 18.771)
+
+[node name="Ball4" parent="." instance=ExtResource("5_r11q0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.337097, 3.7765, 19.4443)
+
+[node name="Ball5" parent="." instance=ExtResource("5_r11q0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.337097, 3.7765, 17.2161)
 
 [editable path="Platform"]
 [editable path="Platform/Legs/FrontLeftLeg"]
+[editable path="Platform/Legs/FrontLeftLeg/robot_leg"]
+[editable path="Platform/Legs/FrontLeftLeg/mecha_leg"]
 [editable path="Platform/Legs/FrontRightLeg"]
+[editable path="Platform/Legs/FrontRightLeg/robot_leg"]
+[editable path="Platform/Legs/FrontRightLeg/mecha_leg"]
 [editable path="Platform/Legs/BackLeftLeg"]
+[editable path="Platform/Legs/BackLeftLeg/robot_leg"]
+[editable path="Platform/Legs/BackLeftLeg/mecha_leg"]
 [editable path="Platform/Legs/BackRightLeg"]
+[editable path="Platform/Legs/BackRightLeg/robot_leg"]
+[editable path="Platform/Legs/BackRightLeg/mecha_leg"]
 [editable path="CharacterBody3D"]
 [editable path="CharacterBody3D/CameraController"]

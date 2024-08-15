@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://bicee3qh0bef8"]
+
+[node name="Walls" type="Node3D"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+use_collision = true
+collision_layer = 2
+collision_mask = 3
+size = Vector3(4, 0.25, 7)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D"]
+operation = 2
+size = Vector3(3.5, 0.25, 6.5)
