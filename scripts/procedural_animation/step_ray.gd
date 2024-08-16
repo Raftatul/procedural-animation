@@ -1,3 +1,4 @@
+class_name StepRay
 extends RayCast3D
 
 

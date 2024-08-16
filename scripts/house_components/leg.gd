@@ -2,7 +2,7 @@ class_name Leg
 extends Node3D
 
 
-@export var step_target: Node3D
+@export var step_ray: StepRay
 @export var adjacent_leg: Leg
 @export var opposite_leg: Leg
 
@@ -16,7 +16,7 @@ extends Node3D
 
 
 func _ready() -> void:
-	ik_target.step_target = step_target
+	ik_target.step_target = step_ray.step_target
 	ik_target.adjacent_target = adjacent_leg.ik_target
 	ik_target.opposite_target = opposite_leg.ik_target
 	ik_target.step_height = step_height

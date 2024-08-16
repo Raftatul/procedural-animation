@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://dhj0ufpq0ru8l"]
+
+[ext_resource type="Script" path="res://scripts/procedural_animation/step_ray.gd" id="1_xah20"]
+
+[node name="StepRay" type="RayCast3D" node_paths=PackedStringArray("step_target", "reset_target") groups=["step_ray"]]
+target_position = Vector3(-0.1, -4, -0.1)
+hit_from_inside = true
+script = ExtResource("1_xah20")
+step_target = NodePath("FrontLeftRayStepTarget")
+reset_target = NodePath("ResetTarget")
+
+[node name="FrontLeftRayStepTarget" type="Marker3D" parent="."]
+
+[node name="ResetTarget" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.88613, 0)

@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://tmp/platform.gd" id="1_d8mom"]
 [ext_resource type="PackedScene" uid="uid://yjtkyxk1jhdj" path="res://scenes/house_components/leg.tscn" id="3_31fkg"]
-[ext_resource type="Script" path="res://scripts/procedural_animation/step_ray.gd" id="3_56i20"]
 [ext_resource type="Script" path="res://scripts/procedural_animation/step_target_container.gd" id="3_uxtip"]
+[ext_resource type="PackedScene" uid="uid://dhj0ufpq0ru8l" path="res://scenes/house_components/step_ray.tscn" id="4_bgjib"]
 [ext_resource type="Script" path="res://scripts/controllers/house_controller.gd" id="5_r5ij4"]
 [ext_resource type="PackedScene" uid="uid://c4e3gho1nk0tf" path="res://scenes/camera_controller.tscn" id="6_3d05v"]
 [ext_resource type="Script" path="res://scripts/interactable.gd" id="7_nj3ml"]
@@ -38,84 +38,44 @@ mesh = SubResource("BoxMesh_0nt5l")
 
 [node name="Legs" type="Node3D" parent="."]
 
-[node name="FrontLeftLeg" parent="Legs" node_paths=PackedStringArray("step_target", "adjacent_leg", "opposite_leg") instance=ExtResource("3_31fkg")]
+[node name="FrontLeftLeg" parent="Legs" node_paths=PackedStringArray("step_ray", "adjacent_leg", "opposite_leg") instance=ExtResource("3_31fkg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -3, -3)
-step_target = NodePath("../../StepTargetContainer/FrontLeftRay/FrontLeftRayStepTarget")
+step_ray = NodePath("../../StepTargetContainer/FrontLeftRay")
 adjacent_leg = NodePath("../FrontRightLeg")
 opposite_leg = NodePath("../BackRightLeg")
 
-[node name="FrontRightLeg" parent="Legs" node_paths=PackedStringArray("step_target", "adjacent_leg", "opposite_leg") instance=ExtResource("3_31fkg")]
+[node name="FrontRightLeg" parent="Legs" node_paths=PackedStringArray("step_ray", "adjacent_leg", "opposite_leg") instance=ExtResource("3_31fkg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -3, -3)
-step_target = NodePath("../../StepTargetContainer/FrontRightRay/FrontRightStepTarget")
+step_ray = NodePath("../../StepTargetContainer/FrontRightRay")
 adjacent_leg = NodePath("../FrontLeftLeg")
 opposite_leg = NodePath("../BackLeftLeg")
 
-[node name="BackLeftLeg" parent="Legs" node_paths=PackedStringArray("step_target", "adjacent_leg", "opposite_leg") instance=ExtResource("3_31fkg")]
+[node name="BackLeftLeg" parent="Legs" node_paths=PackedStringArray("step_ray", "adjacent_leg", "opposite_leg") instance=ExtResource("3_31fkg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -3, 3)
-step_target = NodePath("../../StepTargetContainer/BackLeftRay/BackLeftStepTarget")
+step_ray = NodePath("../../StepTargetContainer/BackLeftRay")
 adjacent_leg = NodePath("../BackRightLeg")
 opposite_leg = NodePath("../FrontRightLeg")
 
-[node name="BackRightLeg" parent="Legs" node_paths=PackedStringArray("step_target", "adjacent_leg", "opposite_leg") instance=ExtResource("3_31fkg")]
+[node name="BackRightLeg" parent="Legs" node_paths=PackedStringArray("step_ray", "adjacent_leg", "opposite_leg") instance=ExtResource("3_31fkg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -3, 3)
-step_target = NodePath("../../StepTargetContainer/BackRightRay/BackRightStepTarget")
+step_ray = NodePath("../../StepTargetContainer/BackRightRay")
 adjacent_leg = NodePath("../BackLeftLeg")
 opposite_leg = NodePath("../FrontLeftLeg")
 
 [node name="StepTargetContainer" type="Node3D" parent="."]
 script = ExtResource("3_uxtip")
 
-[node name="FrontLeftRay" type="RayCast3D" parent="StepTargetContainer" node_paths=PackedStringArray("step_target", "reset_target") groups=["step_ray"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9, 0.605413, -2.9)
-target_position = Vector3(-0.1, -4, -0.1)
-hit_from_inside = true
-script = ExtResource("3_56i20")
-step_target = NodePath("FrontLeftRayStepTarget")
-reset_target = NodePath("ResetTarget")
+[node name="FrontLeftRay" parent="StepTargetContainer" instance=ExtResource("4_bgjib")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9, 0.605, -2.9)
 
-[node name="FrontLeftRayStepTarget" type="Marker3D" parent="StepTargetContainer/FrontLeftRay"]
-
-[node name="ResetTarget" type="Marker3D" parent="StepTargetContainer/FrontLeftRay"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.88613, 0)
-
-[node name="FrontRightRay" type="RayCast3D" parent="StepTargetContainer" node_paths=PackedStringArray("step_target", "reset_target") groups=["step_ray"]]
+[node name="FrontRightRay" parent="StepTargetContainer" instance=ExtResource("4_bgjib")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9, 0.605413, -2.9)
-target_position = Vector3(0.1, -4, -0.1)
-hit_from_inside = true
-script = ExtResource("3_56i20")
-step_target = NodePath("FrontRightStepTarget")
-reset_target = NodePath("ResetTarget")
 
-[node name="FrontRightStepTarget" type="Marker3D" parent="StepTargetContainer/FrontRightRay"]
-
-[node name="ResetTarget" type="Marker3D" parent="StepTargetContainer/FrontRightRay"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.88613, 0)
-
-[node name="BackLeftRay" type="RayCast3D" parent="StepTargetContainer" node_paths=PackedStringArray("step_target", "reset_target") groups=["step_ray"]]
+[node name="BackLeftRay" parent="StepTargetContainer" instance=ExtResource("4_bgjib")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9, 0.605413, 2.9)
-target_position = Vector3(-0.1, -4, 0.1)
-hit_from_inside = true
-script = ExtResource("3_56i20")
-step_target = NodePath("BackLeftStepTarget")
-reset_target = NodePath("ResetTarget")
 
-[node name="BackLeftStepTarget" type="Marker3D" parent="StepTargetContainer/BackLeftRay"]
-
-[node name="ResetTarget" type="Marker3D" parent="StepTargetContainer/BackLeftRay"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.88613, 0)
-
-[node name="BackRightRay" type="RayCast3D" parent="StepTargetContainer" node_paths=PackedStringArray("step_target", "reset_target") groups=["step_ray"]]
+[node name="BackRightRay" parent="StepTargetContainer" instance=ExtResource("4_bgjib")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9, 0.605413, 2.9)
-target_position = Vector3(0.1, -4, 0.1)
-hit_from_inside = true
-script = ExtResource("3_56i20")
-step_target = NodePath("BackRightStepTarget")
-reset_target = NodePath("ResetTarget")
-
-[node name="BackRightStepTarget" type="Marker3D" parent="StepTargetContainer/BackRightRay"]
-
-[node name="ResetTarget" type="Marker3D" parent="StepTargetContainer/BackRightRay"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.88613, 0)
 
 [node name="ControllerInteraction" type="Area3D" parent="."]
 script = ExtResource("7_nj3ml")
