@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 DebugMenu="*res://addons/debug_menu/debug_menu.tscn"
 DebugInput="*res://scripts/debug_input.gd"
+GlobalCanvasLayer="*res://scenes/canvas_layer.tscn"
 
 [display]
 

@@ -1,10 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://dspx7w6gvjfkp"]
+[gd_scene load_steps=25 format=3 uid="uid://dspx7w6gvjfkp"]
 
 [ext_resource type="Terrain3DStorage" uid="uid://bia66f27txaq5" path="res://ressources/terrain/main.res" id="1_lxees"]
 [ext_resource type="PackedScene" uid="uid://0b1c80okyjud" path="res://scenes/grass.tscn" id="2_kye2q"]
+[ext_resource type="Material" uid="uid://cu46b100244nd" path="res://addons/boujie_water_shader/prefabs/deep_ocean_material.tres" id="3_mms3d"]
 [ext_resource type="PackedScene" uid="uid://ryqqjm6icw6n" path="res://scenes/platform.tscn" id="4_7m5lr"]
-[ext_resource type="PackedScene" uid="uid://boevprdry0308" path="res://scenes/player.tscn" id="4_xoo4e"]
 [ext_resource type="PackedScene" uid="uid://bx7hts6huuyr3" path="res://scenes/ball.tscn" id="5_r11q0"]
+[ext_resource type="Script" path="res://scripts/goal.gd" id="6_26lir"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_r2wjf"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -18,8 +19,12 @@ background_mode = 2
 sky = SubResource("Sky_kfgmr")
 tonemap_mode = 2
 glow_enabled = true
+glow_normalized = true
 fog_enabled = true
-fog_light_color = Color(0.685783, 0.501054, 0.429181, 1)
+fog_light_color = Color(0.319789, 0.595258, 0.673157, 1)
+fog_light_energy = 2.0
+fog_sun_scatter = 0.25
+fog_aerial_perspective = 0.1
 
 [sub_resource type="Gradient" id="Gradient_djo7f"]
 offsets = PackedFloat32Array(0.2, 1)
@@ -79,6 +84,11 @@ scene_file = ExtResource("2_kye2q")
 [sub_resource type="Terrain3DAssets" id="Terrain3DAssets_050dm"]
 mesh_list = Array[Terrain3DMeshAsset]([SubResource("Terrain3DMeshAsset_uwmxo"), SubResource("Terrain3DMeshAsset_j4u7b")])
 
+[sub_resource type="PlaneMesh" id="PlaneMesh_nxgol"]
+size = Vector2(600, 600)
+subdivide_width = 500
+subdivide_depth = 500
+
 [sub_resource type="Animation" id="Animation_ai1ce"]
 length = 0.001
 tracks/0/type = "value"
@@ -117,6 +127,13 @@ _data = {
 "s": SubResource("Animation_3m466")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_ituga"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_noqho"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_htllf"]
+size = Vector3(6.53516, 11.625, 12.7432)
+
 [node name="Main" type="Node"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -133,6 +150,11 @@ storage = ExtResource("1_lxees")
 material = SubResource("Terrain3DMaterial_ufbkk")
 assets = SubResource("Terrain3DAssets_050dm")
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.01252, 0)
+material_override = ExtResource("3_mms3d")
+mesh = SubResource("PlaneMesh_nxgol")
+
 [node name="Platform" parent="." instance=ExtResource("4_7m5lr")]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0.417562, 2.93052, 17.4254)
 
@@ -148,6 +170,9 @@ transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 2.4175
 [node name="ForceRay" parent="Platform/Legs/BackRightLeg" index="4"]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -1.58244, 2.68052, 14.4254)
 
+[node name="GameController" parent="Platform" index="6"]
+is_controlled = true
+
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5674, 0, 24.6951)
 use_collision = true
@@ -158,24 +183,6 @@ libraries = {
 "": SubResource("AnimationLibrary_nj5s7")
 }
 autoplay = "s"
-
-[node name="CSGBox3D4" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.576, 9.01449, 2.78412)
-use_collision = true
-size = Vector3(21.457, 0.311523, 15.9471)
-
-[node name="CSGBox3D3" type="CSGBox3D" parent="."]
-transform = Transform3D(0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, 7.67052, 4.15062, 2.78412)
-use_collision = true
-size = Vector3(14.9141, 0.311523, 15.9471)
-
-[node name="CSGBox3D5" type="CSGBox3D" parent="."]
-transform = Transform3D(0.950803, -0.309797, 0, 0.309797, 0.950803, 0, 0, 0, 1, 7.67052, 2.87691, -9.62742)
-use_collision = true
-size = Vector3(14.9141, 0.311523, 15.9471)
-
-[node name="CharacterBody3D" parent="." instance=ExtResource("4_xoo4e")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -12.0802, 4.55916, 13.6575)
 
 [node name="Ball" parent="." instance=ExtResource("5_r11q0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.938043, 3.7765, 15.4954)
@@ -192,6 +199,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.337097, 3.7765, 19.4443)
 [node name="Ball5" parent="." instance=ExtResource("5_r11q0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.337097, 3.7765, 17.2161)
 
+[node name="CollisionShape3D" parent="Ball5" index="0"]
+shape = SubResource("BoxShape3D_ituga")
+
+[node name="MeshInstance3D" parent="Ball5" index="1"]
+mesh = SubResource("BoxMesh_noqho")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_26lir")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.76758, 5.3125, 5.87158)
+shape = SubResource("BoxShape3D_htllf")
+
 [editable path="Platform"]
 [editable path="Platform/Legs/FrontLeftLeg"]
 [editable path="Platform/Legs/FrontLeftLeg/robot_leg"]
@@ -205,5 +227,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.337097, 3.7765, 17.2161)
 [editable path="Platform/Legs/BackRightLeg"]
 [editable path="Platform/Legs/BackRightLeg/robot_leg"]
 [editable path="Platform/Legs/BackRightLeg/mecha_leg"]
-[editable path="CharacterBody3D"]
-[editable path="CharacterBody3D/CameraController"]
+[editable path="Ball5"]

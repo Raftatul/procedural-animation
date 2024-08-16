@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://c03ff6m3khyqb"]
+
+[ext_resource type="Texture2D" uid="uid://ckbaq0ixcec53" path="res://icon.svg" id="1_l3j61"]
+[ext_resource type="Script" path="res://scripts/global_canvas_layer.gd" id="1_raont"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_hxo4i"]
+font_size = 32
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_raont")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="Control" type="Control" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Control"]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Control/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_l3j61")
+expand_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Control/HBoxContainer"]
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_hxo4i")
+vertical_alignment = 1
