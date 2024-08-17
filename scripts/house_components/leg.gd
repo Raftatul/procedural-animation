@@ -34,6 +34,10 @@ func _physics_process(delta: float) -> void:
 	if !force_ray.is_colliding() or ik_target.is_stepping or global_basis.y.dot(Vector3.UP) < 0.0:
 		return
 	
+	_suspension(delta)
+
+
+func _suspension(delta: float) -> void:
 	var hit_point := force_ray.get_collision_point()
 	var distance := force_ray.global_position.distance_to(hit_point)
 	

@@ -50,7 +50,9 @@ func handle_movement(delta) -> void:
 	var rot_input := Input.get_axis("ui_right", "ui_left")
 	var force_multiplier: float = 1.0 + owner.global_basis.z.dot(Vector3.DOWN) * input
 	
-	body.apply_central_force(input * body.global_basis.z * speed * force_multiplier * delta)
+	var move_force = body.global_basis.z * speed * force_multiplier * delta
+	
+	body.apply_central_force(input * move_force)
 	body.apply_torque(rot_input * body.global_basis.y * turn_speed * delta)
 
 
