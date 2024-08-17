@@ -35,11 +35,12 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	var hit_point := force_ray.get_collision_point()
-	var dis := force_ray.global_position.distance_to(hit_point)
+	var distance := force_ray.global_position.distance_to(hit_point)
+	
 	var force_point = owner.global_basis * owner.to_local(force_ray.global_position)
 	
-	var spring_length = clamp(dis - suspension_height, 0.0, suspension_rest_length)
+	var spring_length = clamp(distance - suspension_height, 0.0, suspension_rest_length)
 	var spring_force = suspension_strength * (suspension_rest_length - spring_length)
-	var suspension_force = (1.0 / dis) * force * spring_force * delta
+	var suspension_force = (1.0 / distance) * force * spring_force * delta
 	
 	owner.apply_force(Vector3.UP * suspension_force, force_point)
