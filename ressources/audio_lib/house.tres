@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AudioLibrary" load_steps=5 format=3 uid="uid://rko7vfyu25rg"]
+
+[ext_resource type="Script" path="res://scripts/data_scripts/sound_effect.gd" id="1_2dhrm"]
+[ext_resource type="Script" path="res://scripts/data_scripts/audio_library.gd" id="1_empiw"]
+[ext_resource type="AudioStream" uid="uid://bpf8cm0mscuhu" path="res://assets/audios/legs/metal_leg_step_in_dirt.wav" id="3_rq1g6"]
+
+[sub_resource type="Resource" id="Resource_p6qm3"]
+script = ExtResource("1_2dhrm")
+tag = "Step"
+stream = ExtResource("3_rq1g6")
+
+[resource]
+script = ExtResource("1_empiw")
+sound_effects = Array[ExtResource("1_2dhrm")]([SubResource("Resource_p6qm3")])

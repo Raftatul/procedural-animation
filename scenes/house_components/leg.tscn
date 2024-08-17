@@ -4,8 +4,8 @@
 [ext_resource type="Script" path="res://scripts/house_components/leg.gd" id="2_6a151"]
 [ext_resource type="Script" path="res://scripts/procedural_animation/ik_target.gd" id="3_3gb2p"]
 [ext_resource type="PackedScene" uid="uid://b2ocu8y16klsm" path="res://assets/meshs/mecha_leg.glb" id="3_qdkli"]
-[ext_resource type="AudioStream" uid="uid://bpf8cm0mscuhu" path="res://assets/audios/legs/metal_leg_step_in_dirt.wav" id="4_4n8yv"]
 [ext_resource type="Script" path="res://scripts/nodes/random_pitch_3D.gd" id="5_x38ng"]
+[ext_resource type="Resource" uid="uid://rko7vfyu25rg" path="res://ressources/audio_lib/house.tres" id="6_jy2ty"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dh24g"]
 vertex_color_use_as_albedo = true
@@ -100,8 +100,8 @@ top_level = true
 target_position = Vector3(0, -4, 0)
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("4_4n8yv")
 script = ExtResource("5_x38ng")
+audio_library = ExtResource("6_jy2ty")
 
 [node name="CPUParticles3D" type="CPUParticles3D" parent="."]
 material_override = SubResource("StandardMaterial3D_dh24g")
@@ -112,10 +112,15 @@ one_shot = true
 explosiveness = 1.0
 mesh = SubResource("SphereMesh_kbso3")
 direction = Vector3(0, 1, 0)
-initial_velocity_min = 15.0
-initial_velocity_max = 20.0
+initial_velocity_min = 5.0
+initial_velocity_max = 7.0
+scale_amount_min = 0.15
+scale_amount_max = 0.3
 scale_amount_curve = SubResource("Curve_vivly")
 color_initial_ramp = SubResource("Gradient_qrukj")
+
+[connection signal="target_reached" from="IKTarget" to="AudioStreamPlayer3D" method="play_stream" binds= ["Step"]]
+[connection signal="target_reached" from="IKTarget" to="CPUParticles3D" method="set_emitting" binds= [true]]
 
 [editable path="robot_leg"]
 [editable path="mecha_leg"]

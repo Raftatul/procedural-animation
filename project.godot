@@ -33,6 +33,16 @@ movie_writer/movie_file="D:/Godot_Projects/procedural-animation/tmp/procedural_a
 
 enabled=PackedStringArray("res://addons/debug_menu/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
 
+[file_customization]
+
+folder_colors={
+"res://addons/": "pink",
+"res://assets/": "purple",
+"res://ressources/": "orange",
+"res://scenes/": "blue",
+"res://scripts/": "red"
+}
+
 [input]
 
 ui_left={

@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dspx7w6gvjfkp"]
+[gd_scene load_steps=27 format=3 uid="uid://dspx7w6gvjfkp"]
 
 [ext_resource type="Terrain3DStorage" uid="uid://bia66f27txaq5" path="res://ressources/terrain/main.res" id="1_lxees"]
 [ext_resource type="PackedScene" uid="uid://0b1c80okyjud" path="res://scenes/grass.tscn" id="2_kye2q"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://ryqqjm6icw6n" path="res://scenes/platform.tscn" id="4_7m5lr"]
 [ext_resource type="Texture2D" uid="uid://h2a68mfgdfvg" path="res://assets/textures/coast_sand_01_diff_4k.png" id="4_644b7"]
 [ext_resource type="Texture2D" uid="uid://dd4d40w5m8g72" path="res://assets/textures/coast_sand_01_nor_gl_4k.png" id="5_8k63h"]
-[ext_resource type="PackedScene" uid="uid://bx7hts6huuyr3" path="res://scenes/ball.tscn" id="5_r11q0"]
 [ext_resource type="Texture2D" uid="uid://b1prnvm3uogc0" path="res://assets/textures/gravel_road_diff_4k.png" id="6_4lr4e"]
 [ext_resource type="Script" path="res://scripts/goal.gd" id="6_26lir"]
 [ext_resource type="Texture2D" uid="uid://bbpcw5anpctbl" path="res://assets/textures/gravel_road_nor_gl_4k.png" id="7_fp2b1"]
@@ -111,10 +110,6 @@ size = Vector3(6, 11, 12)
 [sub_resource type="BoxMesh" id="BoxMesh_ihva2"]
 size = Vector3(6, 11, 12)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_ituga"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_noqho"]
-
 [node name="Main" type="Node"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -125,19 +120,19 @@ transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75
 shadow_enabled = true
 
 [node name="Platform" parent="." instance=ExtResource("4_7m5lr")]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0.417562, 2.93052, 17.4254)
+transform = Transform3D(1.94707e-07, 0, -1, 0, 1, 0, 1, 0, 1.94707e-07, -14.3468, 2.93052, 15.6228)
 
 [node name="ForceRay" parent="Platform/Legs/FrontLeftLeg" index="4"]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 2.41756, 2.68052, 20.4254)
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -11.3468, 2.68052, 13.6228)
 
 [node name="ForceRay" parent="Platform/Legs/FrontRightLeg" index="4"]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -1.58244, 2.68052, 20.4254)
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -11.3468, 2.68052, 17.6228)
 
 [node name="ForceRay" parent="Platform/Legs/BackLeftLeg" index="4"]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 2.41756, 2.68052, 14.4254)
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -17.3468, 2.68052, 13.6228)
 
 [node name="ForceRay" parent="Platform/Legs/BackRightLeg" index="4"]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -1.58244, 2.68052, 14.4254)
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -17.3468, 2.68052, 17.6228)
 
 [node name="GameController" parent="Platform" index="6"]
 is_controlled = true
@@ -155,7 +150,7 @@ material_override = ExtResource("3_mms3d")
 mesh = SubResource("PlaneMesh_nxgol")
 
 [node name="Goal" type="Area3D" parent="World"]
-transform = Transform3D(0.806321, 0, -0.591479, 0, 1, 0, 0.591479, 0, 0.806321, -57.7468, 49.9182, 39.5678)
+transform = Transform3D(0.326179, 0, -0.945308, 0, 1, 0, 0.945308, 0, 0.326179, -51.4692, 49.9182, 35.5125)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("6_26lir")
@@ -171,27 +166,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.2527, -1.90735e-06, 15.48
 
 [node name="Props" type="Node3D" parent="."]
 
-[node name="Ball" parent="Props" instance=ExtResource("5_r11q0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.938043, 3.7765, 15.4954)
-
-[node name="Ball2" parent="Props" instance=ExtResource("5_r11q0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.938043, 3.7765, 17.3009)
-
-[node name="Ball3" parent="Props" instance=ExtResource("5_r11q0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.938043, 3.7765, 18.771)
-
-[node name="Ball4" parent="Props" instance=ExtResource("5_r11q0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.337097, 3.7765, 19.4443)
-
-[node name="Ball5" parent="Props" instance=ExtResource("5_r11q0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.337097, 3.7765, 17.2161)
-
-[node name="CollisionShape3D" parent="Props/Ball5" index="0"]
-shape = SubResource("BoxShape3D_ituga")
-
-[node name="MeshInstance3D" parent="Props/Ball5" index="1"]
-mesh = SubResource("BoxMesh_noqho")
-
 [editable path="Platform"]
 [editable path="Platform/Legs/FrontLeftLeg"]
 [editable path="Platform/Legs/FrontLeftLeg/robot_leg"]
@@ -205,4 +179,3 @@ mesh = SubResource("BoxMesh_noqho")
 [editable path="Platform/Legs/BackRightLeg"]
 [editable path="Platform/Legs/BackRightLeg/robot_leg"]
 [editable path="Platform/Legs/BackRightLeg/mecha_leg"]
-[editable path="Props/Ball5"]
