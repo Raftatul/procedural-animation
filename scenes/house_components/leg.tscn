@@ -24,8 +24,8 @@ script = ExtResource("2_6a151")
 ik = NodePath("mecha_leg/Armature/Skeleton3D/SkeletonIK3D")
 ik_target = NodePath("IKTarget")
 step_height = 1.0
-force = 2000.0
-suspension_height = 1.0
+force = 200.0
+suspension_height = 1.75
 suspension_rest_length = 1.0
 suspension_strength = 50.0
 
