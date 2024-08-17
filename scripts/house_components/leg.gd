@@ -31,7 +31,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if not force_ray.is_colliding() and !ik_target.is_stepping:
+	if !force_ray.is_colliding() or ik_target.is_stepping or global_basis.y.dot(Vector3.UP) < 0.0:
 		return
 	
 	var hit_point := force_ray.get_collision_point()
