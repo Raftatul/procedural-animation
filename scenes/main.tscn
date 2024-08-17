@@ -1,11 +1,16 @@
-[gd_scene load_steps=25 format=3 uid="uid://dspx7w6gvjfkp"]
+[gd_scene load_steps=30 format=3 uid="uid://dspx7w6gvjfkp"]
 
 [ext_resource type="Terrain3DStorage" uid="uid://bia66f27txaq5" path="res://ressources/terrain/main.res" id="1_lxees"]
 [ext_resource type="PackedScene" uid="uid://0b1c80okyjud" path="res://scenes/grass.tscn" id="2_kye2q"]
 [ext_resource type="Material" uid="uid://cu46b100244nd" path="res://addons/boujie_water_shader/prefabs/deep_ocean_material.tres" id="3_mms3d"]
 [ext_resource type="PackedScene" uid="uid://ryqqjm6icw6n" path="res://scenes/platform.tscn" id="4_7m5lr"]
+[ext_resource type="Texture2D" uid="uid://h2a68mfgdfvg" path="res://assets/textures/coast_sand_01_diff_4k.png" id="4_644b7"]
+[ext_resource type="Texture2D" uid="uid://dd4d40w5m8g72" path="res://assets/textures/coast_sand_01_nor_gl_4k.png" id="5_8k63h"]
 [ext_resource type="PackedScene" uid="uid://bx7hts6huuyr3" path="res://scenes/ball.tscn" id="5_r11q0"]
+[ext_resource type="Texture2D" uid="uid://b1prnvm3uogc0" path="res://assets/textures/gravel_road_diff_4k.png" id="6_4lr4e"]
 [ext_resource type="Script" path="res://scripts/goal.gd" id="6_26lir"]
+[ext_resource type="Texture2D" uid="uid://bbpcw5anpctbl" path="res://assets/textures/gravel_road_nor_gl_4k.png" id="7_fp2b1"]
+[ext_resource type="PackedScene" uid="uid://1hig1xqolwwp" path="res://scenes/buildings/mission_tracker.tscn" id="7_wu7gp"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_r2wjf"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -61,7 +66,6 @@ _shader_parameters = {
 "noise_texture": SubResource("NoiseTexture2D_efbuk"),
 "vertex_normals_distance": 128.0
 }
-show_checkered = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_amsvc"]
 cull_mode = 2
@@ -81,58 +85,35 @@ id = 1
 density = 10.0
 scene_file = ExtResource("2_kye2q")
 
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_jnuts"]
+name = "coast_sand_01_diff_4k"
+albedo_texture = ExtResource("4_644b7")
+normal_texture = ExtResource("5_8k63h")
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_sybly"]
+name = "gravel_road_diff_4k"
+id = 1
+albedo_texture = ExtResource("6_4lr4e")
+normal_texture = ExtResource("7_fp2b1")
+
 [sub_resource type="Terrain3DAssets" id="Terrain3DAssets_050dm"]
 mesh_list = Array[Terrain3DMeshAsset]([SubResource("Terrain3DMeshAsset_uwmxo"), SubResource("Terrain3DMeshAsset_j4u7b")])
+texture_list = Array[Terrain3DTextureAsset]([SubResource("Terrain3DTextureAsset_jnuts"), SubResource("Terrain3DTextureAsset_sybly")])
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_nxgol"]
 size = Vector2(600, 600)
 subdivide_width = 500
 subdivide_depth = 500
 
-[sub_resource type="Animation" id="Animation_ai1ce"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(-12.5674, 0, 24.6951)]
-}
+[sub_resource type="BoxShape3D" id="BoxShape3D_htllf"]
+size = Vector3(6, 11, 12)
 
-[sub_resource type="Animation" id="Animation_3m466"]
-resource_name = "s"
-length = 2.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1, 2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(-12.567, 1, 24.695), Vector3(-12.5674, 0, 24.6951), Vector3(-12.567, 1, 24.695)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_nj5s7"]
-_data = {
-"RESET": SubResource("Animation_ai1ce"),
-"s": SubResource("Animation_3m466")
-}
+[sub_resource type="BoxMesh" id="BoxMesh_ihva2"]
+size = Vector3(6, 11, 12)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ituga"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_noqho"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_htllf"]
-size = Vector3(6.53516, 11.625, 12.7432)
 
 [node name="Main" type="Node"]
 
@@ -142,6 +123,24 @@ environment = SubResource("Environment_1oi0b")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
 shadow_enabled = true
+
+[node name="Platform" parent="." instance=ExtResource("4_7m5lr")]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0.417562, 2.93052, 17.4254)
+
+[node name="ForceRay" parent="Platform/Legs/FrontLeftLeg" index="4"]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 2.41756, 2.68052, 20.4254)
+
+[node name="ForceRay" parent="Platform/Legs/FrontRightLeg" index="4"]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -1.58244, 2.68052, 20.4254)
+
+[node name="ForceRay" parent="Platform/Legs/BackLeftLeg" index="4"]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 2.41756, 2.68052, 14.4254)
+
+[node name="ForceRay" parent="Platform/Legs/BackRightLeg" index="4"]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -1.58244, 2.68052, 14.4254)
+
+[node name="GameController" parent="Platform" index="6"]
+is_controlled = true
 
 [node name="World" type="Node3D" parent="."]
 
@@ -155,136 +154,43 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.01252, 0)
 material_override = ExtResource("3_mms3d")
 mesh = SubResource("PlaneMesh_nxgol")
 
-[node name="Platform" parent="." instance=ExtResource("4_7m5lr")]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0.417562, 2.93052, 17.4254)
-
-[node name="Cube_002" parent="Platform/Legs/FrontLeftLeg/robot_leg/Armature/Skeleton3D" index="0"]
-transform = Transform3D(1, -4.5821e-08, -6.25635e-08, 1.13044e-07, 1, -2.98023e-07, 6.84718e-08, 3.27826e-07, 1, 1.866e-07, -8.31238, -0.661397)
-
-[node name="Cube_001" parent="Platform/Legs/FrontLeftLeg/robot_leg/Armature/Skeleton3D" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.45058e-09, -6.32819, -7.45058e-09)
-
-[node name="Cube" parent="Platform/Legs/FrontLeftLeg/robot_leg/Armature/Skeleton3D" index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.39246, 0)
-
-[node name="Cube_002" parent="Platform/Legs/FrontLeftLeg/mecha_leg/Armature/Skeleton3D" index="0"]
-transform = Transform3D(1, 1.44365e-07, -2.11608e-07, -1.42431e-07, 1, -2.98024e-08, 1.99733e-07, -4.92957e-14, 1, 7.96979e-08, -8.31238, -0.661398)
-
-[node name="Cube_001" parent="Platform/Legs/FrontLeftLeg/mecha_leg/Armature/Skeleton3D" index="1"]
-transform = Transform3D(1, 1.19209e-07, -8.25719e-08, -1.19209e-07, 1, -5.50479e-08, 3.57628e-07, 2.38419e-07, 0.230888, 2.51467e-14, -6.32819, -7.61829e-07)
-
-[node name="Cube" parent="Platform/Legs/FrontLeftLeg/mecha_leg/Armature/Skeleton3D" index="2"]
-transform = Transform3D(1, 1.19209e-07, -3.57628e-07, -1.19209e-07, 1, -2.38419e-07, 3.57628e-07, 2.38419e-07, 1, 8.49972e-15, -2.39246, -2.85204e-07)
-
-[node name="ForceRay" parent="Platform/Legs/FrontLeftLeg" index="4"]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 2.41756, 2.68052, 20.4254)
-
-[node name="Cube_002" parent="Platform/Legs/FrontRightLeg/robot_leg/Armature/Skeleton3D" index="0"]
-transform = Transform3D(1, -4.5821e-08, -6.25635e-08, 1.13044e-07, 1, -2.98023e-07, 6.84718e-08, 3.27826e-07, 1, 1.866e-07, -8.31238, -0.661397)
-
-[node name="Cube_001" parent="Platform/Legs/FrontRightLeg/robot_leg/Armature/Skeleton3D" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.45058e-09, -6.32819, -7.45058e-09)
-
-[node name="Cube" parent="Platform/Legs/FrontRightLeg/robot_leg/Armature/Skeleton3D" index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.39246, 0)
-
-[node name="Cube_002" parent="Platform/Legs/FrontRightLeg/mecha_leg/Armature/Skeleton3D" index="0"]
-transform = Transform3D(1, 1.44365e-07, -2.11608e-07, -1.42431e-07, 1, -2.98024e-08, 1.99733e-07, -4.92957e-14, 1, 7.96979e-08, -8.31238, -0.661398)
-
-[node name="Cube_001" parent="Platform/Legs/FrontRightLeg/mecha_leg/Armature/Skeleton3D" index="1"]
-transform = Transform3D(1, 1.19209e-07, -8.25719e-08, -1.19209e-07, 1, -5.50479e-08, 3.57628e-07, 2.38419e-07, 0.230888, 2.51467e-14, -6.32819, -7.61829e-07)
-
-[node name="Cube" parent="Platform/Legs/FrontRightLeg/mecha_leg/Armature/Skeleton3D" index="2"]
-transform = Transform3D(1, 1.19209e-07, -3.57628e-07, -1.19209e-07, 1, -2.38419e-07, 3.57628e-07, 2.38419e-07, 1, 8.49972e-15, -2.39246, -2.85204e-07)
-
-[node name="ForceRay" parent="Platform/Legs/FrontRightLeg" index="4"]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -1.58244, 2.68052, 20.4254)
-
-[node name="Cube_002" parent="Platform/Legs/BackLeftLeg/robot_leg/Armature/Skeleton3D" index="0"]
-transform = Transform3D(1, -4.5821e-08, -6.25635e-08, 1.13044e-07, 1, -2.98023e-07, 6.84718e-08, 3.27826e-07, 1, 1.866e-07, -8.31238, -0.661397)
-
-[node name="Cube_001" parent="Platform/Legs/BackLeftLeg/robot_leg/Armature/Skeleton3D" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.45058e-09, -6.32819, -7.45058e-09)
-
-[node name="Cube" parent="Platform/Legs/BackLeftLeg/robot_leg/Armature/Skeleton3D" index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.39246, 0)
-
-[node name="Cube_002" parent="Platform/Legs/BackLeftLeg/mecha_leg/Armature/Skeleton3D" index="0"]
-transform = Transform3D(1, 1.44365e-07, -2.11608e-07, -1.42431e-07, 1, -2.98024e-08, 1.99733e-07, -4.92957e-14, 1, 7.96979e-08, -8.31238, -0.661398)
-
-[node name="Cube_001" parent="Platform/Legs/BackLeftLeg/mecha_leg/Armature/Skeleton3D" index="1"]
-transform = Transform3D(1, 1.19209e-07, -8.25719e-08, -1.19209e-07, 1, -5.50479e-08, 3.57628e-07, 2.38419e-07, 0.230888, 2.51467e-14, -6.32819, -7.61829e-07)
-
-[node name="Cube" parent="Platform/Legs/BackLeftLeg/mecha_leg/Armature/Skeleton3D" index="2"]
-transform = Transform3D(1, 1.19209e-07, -3.57628e-07, -1.19209e-07, 1, -2.38419e-07, 3.57628e-07, 2.38419e-07, 1, 8.49972e-15, -2.39246, -2.85204e-07)
-
-[node name="ForceRay" parent="Platform/Legs/BackLeftLeg" index="4"]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 2.41756, 2.68052, 14.4254)
-
-[node name="Cube_002" parent="Platform/Legs/BackRightLeg/robot_leg/Armature/Skeleton3D" index="0"]
-transform = Transform3D(1, -4.5821e-08, -6.25635e-08, 1.13044e-07, 1, -2.98023e-07, 6.84718e-08, 3.27826e-07, 1, 1.866e-07, -8.31238, -0.661397)
-
-[node name="Cube_001" parent="Platform/Legs/BackRightLeg/robot_leg/Armature/Skeleton3D" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.45058e-09, -6.32819, -7.45058e-09)
-
-[node name="Cube" parent="Platform/Legs/BackRightLeg/robot_leg/Armature/Skeleton3D" index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.39246, 0)
-
-[node name="Cube_002" parent="Platform/Legs/BackRightLeg/mecha_leg/Armature/Skeleton3D" index="0"]
-transform = Transform3D(1, 1.44365e-07, -2.11608e-07, -1.42431e-07, 1, -2.98024e-08, 1.99733e-07, -4.92957e-14, 1, 7.96979e-08, -8.31238, -0.661398)
-
-[node name="Cube_001" parent="Platform/Legs/BackRightLeg/mecha_leg/Armature/Skeleton3D" index="1"]
-transform = Transform3D(1, 1.19209e-07, -8.25719e-08, -1.19209e-07, 1, -5.50479e-08, 3.57628e-07, 2.38419e-07, 0.230888, 2.51467e-14, -6.32819, -7.61829e-07)
-
-[node name="Cube" parent="Platform/Legs/BackRightLeg/mecha_leg/Armature/Skeleton3D" index="2"]
-transform = Transform3D(1, 1.19209e-07, -3.57628e-07, -1.19209e-07, 1, -2.38419e-07, 3.57628e-07, 2.38419e-07, 1, 8.49972e-15, -2.39246, -2.85204e-07)
-
-[node name="ForceRay" parent="Platform/Legs/BackRightLeg" index="4"]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -1.58244, 2.68052, 14.4254)
-
-[node name="GameController" parent="Platform" index="6"]
-is_controlled = true
-
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5674, 0, 24.6951)
-use_collision = true
-size = Vector3(5, 0.25, 5)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CSGBox3D"]
-libraries = {
-"": SubResource("AnimationLibrary_nj5s7")
-}
-autoplay = "s"
-
-[node name="Ball" parent="." instance=ExtResource("5_r11q0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.938043, 3.7765, 15.4954)
-
-[node name="Ball2" parent="." instance=ExtResource("5_r11q0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.938043, 3.7765, 17.3009)
-
-[node name="Ball3" parent="." instance=ExtResource("5_r11q0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.938043, 3.7765, 18.771)
-
-[node name="Ball4" parent="." instance=ExtResource("5_r11q0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.337097, 3.7765, 19.4443)
-
-[node name="Ball5" parent="." instance=ExtResource("5_r11q0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.337097, 3.7765, 17.2161)
-
-[node name="CollisionShape3D" parent="Ball5" index="0"]
-shape = SubResource("BoxShape3D_ituga")
-
-[node name="MeshInstance3D" parent="Ball5" index="1"]
-mesh = SubResource("BoxMesh_noqho")
-
-[node name="Area3D" type="Area3D" parent="."]
+[node name="Goal" type="Area3D" parent="World"]
+transform = Transform3D(0.806321, 0, -0.591479, 0, 1, 0, 0.591479, 0, 0.806321, -57.7468, 49.9182, 39.5678)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("6_26lir")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.76758, 5.3125, 5.87158)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Goal"]
 shape = SubResource("BoxShape3D_htllf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/Goal"]
+mesh = SubResource("BoxMesh_ihva2")
+
+[node name="MissionTracker" parent="World" instance=ExtResource("7_wu7gp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.2527, -1.90735e-06, 15.4838)
+
+[node name="Props" type="Node3D" parent="."]
+
+[node name="Ball" parent="Props" instance=ExtResource("5_r11q0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.938043, 3.7765, 15.4954)
+
+[node name="Ball2" parent="Props" instance=ExtResource("5_r11q0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.938043, 3.7765, 17.3009)
+
+[node name="Ball3" parent="Props" instance=ExtResource("5_r11q0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.938043, 3.7765, 18.771)
+
+[node name="Ball4" parent="Props" instance=ExtResource("5_r11q0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.337097, 3.7765, 19.4443)
+
+[node name="Ball5" parent="Props" instance=ExtResource("5_r11q0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.337097, 3.7765, 17.2161)
+
+[node name="CollisionShape3D" parent="Props/Ball5" index="0"]
+shape = SubResource("BoxShape3D_ituga")
+
+[node name="MeshInstance3D" parent="Props/Ball5" index="1"]
+mesh = SubResource("BoxMesh_noqho")
 
 [editable path="Platform"]
 [editable path="Platform/Legs/FrontLeftLeg"]
@@ -299,4 +205,4 @@ shape = SubResource("BoxShape3D_htllf")
 [editable path="Platform/Legs/BackRightLeg"]
 [editable path="Platform/Legs/BackRightLeg/robot_leg"]
 [editable path="Platform/Legs/BackRightLeg/mecha_leg"]
-[editable path="Ball5"]
+[editable path="Props/Ball5"]

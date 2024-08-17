@@ -1,0 +1,46 @@
+[gd_scene load_steps=3 format=3 uid="uid://1hig1xqolwwp"]
+
+[ext_resource type="Script" path="res://scripts/buildings/mission_tracker.gd" id="1_h50bg"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_5gegt"]
+
+[node name="MissionTracker" type="Node3D"]
+script = ExtResource("1_h50bg")
+
+[node name="Spawnpoints" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Spawnpoints"]
+mesh = SubResource("SphereMesh_5gegt")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.723073, 0, 1.23695)
+mesh = SubResource("SphereMesh_5gegt")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.30909, 0, -0.502659)
+mesh = SubResource("SphereMesh_5gegt")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.08918, 0, 1.1624)
+mesh = SubResource("SphereMesh_5gegt")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.644032, 0, -2.46617)
+mesh = SubResource("SphereMesh_5gegt")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.86926, 0, -1.17811)
+mesh = SubResource("SphereMesh_5gegt")
+skeleton = NodePath("../..")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
