@@ -15,7 +15,7 @@ var player_controller: GameController
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_accept"):
+	if event.is_action_pressed("ui_accept") and player_controller:
 		switch_controller(player_controller)
 	if event.is_action_pressed("run"):
 		speed *= 2.0
@@ -48,8 +48,9 @@ func _process(delta: float) -> void:
 func handle_movement(delta) -> void:
 	var input := Input.get_axis("ui_up", "ui_down")
 	var rot_input := Input.get_axis("ui_right", "ui_left")
+	var force_multiplier: float = clamp(owner.global_basis.y.dot(Vector3.UP), 0.0, 1.0)
 	
-	body.apply_central_force(input * body.global_basis.z * speed * delta)
+	body.apply_central_force(input * body.global_basis.z * speed * force_multiplier * delta)
 	body.apply_torque(rot_input * body.global_basis.y * turn_speed * delta)
 
 

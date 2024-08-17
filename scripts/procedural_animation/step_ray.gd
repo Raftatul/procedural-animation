@@ -5,7 +5,7 @@ extends RayCast3D
 @export var step_target: Node3D
 @export var reset_target: Node3D
 
-@export var max_angle := 45.0
+@export_range(-90.0, 90.0) var max_angle := 45.0
 
 @onready var max_rad_angle := deg_to_rad(max_angle)
 
