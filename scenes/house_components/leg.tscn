@@ -23,8 +23,11 @@ colors = PackedColorArray(0.318341, 0.157361, 1.44392e-07, 1, 1, 0.498039, 0, 1)
 script = ExtResource("2_6a151")
 ik = NodePath("mecha_leg/Armature/Skeleton3D/SkeletonIK3D")
 ik_target = NodePath("IKTarget")
-force = 6000.0
 step_height = 1.0
+force = 2000.0
+suspension_height = 1.0
+suspension_rest_length = 1.0
+suspension_strength = 50.0
 
 [node name="robot_leg" parent="." instance=ExtResource("1_if3ko")]
 transform = Transform3D(0.33, 0, 0, 0, 0.33, 0, 0, 0, 0.33, 0, 0, 0)
@@ -91,7 +94,6 @@ target_position = Vector3(0, -2, 0)
 [node name="ForceRayRemote" type="RemoteTransform3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.75, 0)
 remote_path = NodePath("../ForceRay")
-update_rotation = false
 update_scale = false
 
 [node name="ForceRay" type="RayCast3D" parent="."]

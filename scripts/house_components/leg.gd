@@ -9,8 +9,14 @@ extends Node3D
 @export var ik: SkeletonIK3D
 @export var ik_target: IKTarget
 
-@export var force := 1.0
 @export var step_height := 0.1
+
+@export_group("Suspension")
+@export var force := 1.0
+@export var suspension_height := 3.0
+@export var suspension_rest_length := 2.0
+@export var suspension_strength := 1.0
+
 
 @onready var force_ray: RayCast3D = $ForceRay
 
@@ -25,10 +31,15 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	var hit_point := force_ray.get_collision_point()
+	if not force_ray.is_colliding() and !ik_target.is_stepping:
+		return
 	
-	if force_ray.is_colliding():
-		var dis := force_ray.global_position.distance_to(hit_point)
-		var force_point = owner.global_basis * owner.to_local(force_ray.global_position)
-		
-		owner.apply_force(Vector3.UP * (1.0 / dis) * force * delta, force_point)
+	var hit_point := force_ray.get_collision_point()
+	var dis := force_ray.global_position.distance_to(hit_point)
+	var force_point = owner.global_basis * owner.to_local(force_ray.global_position)
+	
+	var spring_length = clamp(dis - suspension_height, 0.0, suspension_rest_length)
+	var spring_force = suspension_strength * (suspension_rest_length - spring_length)
+	var suspension_force = (1.0 / dis) * force * spring_force * delta
+	
+	owner.apply_force(Vector3.UP * suspension_force, force_point)

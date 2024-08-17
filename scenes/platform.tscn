@@ -26,8 +26,8 @@ collision_mask = 3
 mass = 20.0
 physics_material_override = SubResource("PhysicsMaterial_rle3r")
 continuous_cd = true
-linear_damp = 1.0
-angular_damp = 2.0
+linear_damp = 2.0
+angular_damp = 1.0
 script = ExtResource("1_d8mom")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
@@ -94,6 +94,7 @@ script = ExtResource("5_r5ij4")
 body = NodePath("..")
 speed = 5000.0
 turn_speed = 10000.0
+is_controlled = true
 camera = NodePath("../Camera")
 
 [node name="Walls" type="Node3D" parent="."]

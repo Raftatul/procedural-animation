@@ -1,0 +1,178 @@
+[gd_scene load_steps=27 format=3 uid="uid://dspx7w6gvjfkp"]
+
+[ext_resource type="PackedScene" uid="uid://ryqqjm6icw6n" path="res://scenes/platform.tscn" id="1_32d6p"]
+[ext_resource type="Terrain3DStorage" uid="uid://bia66f27txaq5" path="res://ressources/terrain/main.res" id="2_jp2y4"]
+[ext_resource type="PackedScene" uid="uid://0b1c80okyjud" path="res://scenes/grass.tscn" id="3_pqcg7"]
+[ext_resource type="Texture2D" uid="uid://h2a68mfgdfvg" path="res://assets/textures/coast_sand_01_diff_4k.png" id="4_f8c6w"]
+[ext_resource type="Texture2D" uid="uid://dd4d40w5m8g72" path="res://assets/textures/coast_sand_01_nor_gl_4k.png" id="5_3ru88"]
+[ext_resource type="Texture2D" uid="uid://b1prnvm3uogc0" path="res://assets/textures/gravel_road_diff_4k.png" id="6_r7xpq"]
+[ext_resource type="Texture2D" uid="uid://bbpcw5anpctbl" path="res://assets/textures/gravel_road_nor_gl_4k.png" id="7_km5je"]
+[ext_resource type="Material" uid="uid://cu46b100244nd" path="res://addons/boujie_water_shader/prefabs/deep_ocean_material.tres" id="8_lw45d"]
+[ext_resource type="Script" path="res://scripts/goal.gd" id="9_a8tby"]
+[ext_resource type="PackedScene" uid="uid://1hig1xqolwwp" path="res://scenes/buildings/mission_tracker.tscn" id="10_20hlq"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_r2wjf"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_kfgmr"]
+sky_material = SubResource("ProceduralSkyMaterial_r2wjf")
+
+[sub_resource type="Environment" id="Environment_1oi0b"]
+background_mode = 2
+sky = SubResource("Sky_kfgmr")
+tonemap_mode = 2
+glow_enabled = true
+glow_normalized = true
+fog_enabled = true
+fog_light_color = Color(0.205782, 0.41995, 0.479737, 1)
+fog_light_energy = 2.0
+fog_sun_scatter = 0.25
+fog_aerial_perspective = 0.1
+
+[sub_resource type="Gradient" id="Gradient_djo7f"]
+offsets = PackedFloat32Array(0.2, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_6gu04"]
+noise_type = 2
+frequency = 0.03
+cellular_jitter = 3.0
+cellular_return_type = 0
+domain_warp_enabled = true
+domain_warp_type = 1
+domain_warp_amplitude = 50.0
+domain_warp_fractal_type = 2
+domain_warp_fractal_lacunarity = 1.5
+domain_warp_fractal_gain = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_efbuk"]
+seamless = true
+color_ramp = SubResource("Gradient_djo7f")
+noise = SubResource("FastNoiseLite_6gu04")
+
+[sub_resource type="Terrain3DMaterial" id="Terrain3DMaterial_ufbkk"]
+_shader_parameters = {
+"blend_sharpness": 0.87,
+"height_blending": true,
+"macro_variation1": Color(1, 1, 1, 1),
+"macro_variation2": Color(1, 1, 1, 1),
+"noise1_angle": 0.0,
+"noise1_offset": Vector2(0.5, 0.5),
+"noise1_scale": 0.04,
+"noise2_scale": 0.076,
+"noise3_scale": 0.225,
+"noise_texture": SubResource("NoiseTexture2D_efbuk"),
+"vertex_normals_distance": 128.0
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_amsvc"]
+cull_mode = 2
+vertex_color_use_as_albedo = true
+backlight_enabled = true
+backlight = Color(0.5, 0.5, 0.5, 1)
+
+[sub_resource type="Terrain3DMeshAsset" id="Terrain3DMeshAsset_uwmxo"]
+height_offset = 0.5
+density = 10.0
+material_override = SubResource("StandardMaterial3D_amsvc")
+generated_type = 1
+
+[sub_resource type="Terrain3DMeshAsset" id="Terrain3DMeshAsset_j4u7b"]
+name = "grass"
+id = 1
+density = 10.0
+scene_file = ExtResource("3_pqcg7")
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_jnuts"]
+name = "coast_sand_01_diff_4k"
+albedo_texture = ExtResource("4_f8c6w")
+normal_texture = ExtResource("5_3ru88")
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_sybly"]
+name = "gravel_road_diff_4k"
+id = 1
+albedo_texture = ExtResource("6_r7xpq")
+normal_texture = ExtResource("7_km5je")
+
+[sub_resource type="Terrain3DAssets" id="Terrain3DAssets_050dm"]
+mesh_list = Array[Terrain3DMeshAsset]([SubResource("Terrain3DMeshAsset_uwmxo"), SubResource("Terrain3DMeshAsset_j4u7b")])
+texture_list = Array[Terrain3DTextureAsset]([SubResource("Terrain3DTextureAsset_jnuts"), SubResource("Terrain3DTextureAsset_sybly")])
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_nxgol"]
+size = Vector2(600, 600)
+subdivide_width = 500
+subdivide_depth = 500
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_htllf"]
+size = Vector3(6, 11, 12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ihva2"]
+size = Vector3(6, 11, 12)
+
+[node name="Main" type="Node"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1oi0b")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Platform" parent="." instance=ExtResource("1_32d6p")]
+transform = Transform3D(1.94707e-07, 0, -1, 0, 1, 0, 1, 0, 1.94707e-07, -14.3468, 6.70564, 15.6228)
+
+[node name="ForceRay" parent="Platform/Legs/FrontLeftLeg" index="4"]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -11.3468, 6.45564, 13.6228)
+
+[node name="ForceRay" parent="Platform/Legs/FrontRightLeg" index="4"]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -11.3468, 6.45564, 17.6228)
+
+[node name="ForceRay" parent="Platform/Legs/BackLeftLeg" index="4"]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -17.3468, 6.45564, 13.6228)
+
+[node name="ForceRay" parent="Platform/Legs/BackRightLeg" index="4"]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -17.3468, 6.45564, 17.6228)
+
+[node name="World" type="Node3D" parent="."]
+
+[node name="Terrain3D" type="Terrain3D" parent="World"]
+storage = ExtResource("2_jp2y4")
+material = SubResource("Terrain3DMaterial_ufbkk")
+assets = SubResource("Terrain3DAssets_050dm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.01252, 0)
+material_override = ExtResource("8_lw45d")
+mesh = SubResource("PlaneMesh_nxgol")
+
+[node name="Goal" type="Area3D" parent="World"]
+transform = Transform3D(0.326179, 0, -0.945308, 0, 1, 0, 0.945308, 0, 0.326179, -51.4692, 49.9182, 35.5125)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("9_a8tby")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Goal"]
+shape = SubResource("BoxShape3D_htllf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/Goal"]
+mesh = SubResource("BoxMesh_ihva2")
+
+[node name="MissionTracker" parent="World" instance=ExtResource("10_20hlq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.2527, -1.90735e-06, 15.4838)
+
+[node name="Props" type="Node3D" parent="."]
+
+[editable path="Platform"]
+[editable path="Platform/Legs/FrontLeftLeg"]
+[editable path="Platform/Legs/FrontLeftLeg/robot_leg"]
+[editable path="Platform/Legs/FrontLeftLeg/mecha_leg"]
+[editable path="Platform/Legs/FrontRightLeg"]
+[editable path="Platform/Legs/FrontRightLeg/robot_leg"]
+[editable path="Platform/Legs/FrontRightLeg/mecha_leg"]
+[editable path="Platform/Legs/BackLeftLeg"]
+[editable path="Platform/Legs/BackLeftLeg/robot_leg"]
+[editable path="Platform/Legs/BackLeftLeg/mecha_leg"]
+[editable path="Platform/Legs/BackRightLeg"]
+[editable path="Platform/Legs/BackRightLeg/robot_leg"]
+[editable path="Platform/Legs/BackRightLeg/mecha_leg"]
