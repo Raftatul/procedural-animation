@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scripts/house_components/leg.gd" id="2_6a151"]
 [ext_resource type="Script" path="res://scripts/procedural_animation/ik_target.gd" id="3_3gb2p"]
 [ext_resource type="PackedScene" uid="uid://b2ocu8y16klsm" path="res://assets/meshs/mecha_leg.glb" id="3_qdkli"]
-[ext_resource type="Script" path="res://scripts/nodes/random_pitch_3D.gd" id="5_x38ng"]
+[ext_resource type="Script" path="res://scripts/nodes/custom_audio_stream_player_3d.gd" id="5_x38ng"]
 [ext_resource type="Resource" uid="uid://rko7vfyu25rg" path="res://ressources/audio_lib/house.tres" id="6_jy2ty"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dh24g"]

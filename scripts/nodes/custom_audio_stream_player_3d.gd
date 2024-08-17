@@ -1,4 +1,4 @@
-class_name RandomPitch3D
+class_name CustomAudioStreamPlayer3D
 extends AudioStreamPlayer3D
 
 
@@ -18,4 +18,4 @@ func play_stream(tag:String, from_position: float = 0.0) -> void:
 	
 	var audio_stream := audio_library.get_audio_stream(tag)
 	var polyphonic_stream_playback := self.get_stream_playback()
-	polyphonic_stream_playback.play_stream(audio_stream)
+	polyphonic_stream_playback.play_stream(audio_stream, from_position)

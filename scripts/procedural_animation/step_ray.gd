@@ -14,7 +14,7 @@ extends RayCast3D
 var is_on_ground := false
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	is_on_ground = is_colliding()
 	step_target.set_meta("is_on_ground", is_on_ground)
 	
