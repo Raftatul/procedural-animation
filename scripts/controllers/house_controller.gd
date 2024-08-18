@@ -24,22 +24,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		fr_leg.movement_mode = fl_leg.MOVEMENT_MODE.RUN
 		bl_leg.movement_mode = fl_leg.MOVEMENT_MODE.RUN
 		br_leg.movement_mode = fl_leg.MOVEMENT_MODE.RUN
-		
-		fl_leg.front_step_distance *= 2.0
-		fr_leg.front_step_distance *= 2.0
-		bl_leg.front_step_distance *= 2.0
-		br_leg.front_step_distance *= 2.0
 	elif event.is_action_released("run"):
 		speed /= 2.0
 		fl_leg.movement_mode = fl_leg.MOVEMENT_MODE.WALK
 		fr_leg.movement_mode = fl_leg.MOVEMENT_MODE.WALK
 		bl_leg.movement_mode = fl_leg.MOVEMENT_MODE.WALK
 		br_leg.movement_mode = fl_leg.MOVEMENT_MODE.WALK
-		
-		fl_leg.front_step_distance /= 2.0
-		fr_leg.front_step_distance /= 2.0
-		bl_leg.front_step_distance /= 2.0
-		br_leg.front_step_distance /= 2.0
 
 
 func _process(delta: float) -> void:

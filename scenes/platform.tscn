@@ -27,7 +27,7 @@ mass = 20.0
 physics_material_override = SubResource("PhysicsMaterial_rle3r")
 continuous_cd = true
 linear_damp = 2.0
-angular_damp = 1.0
+angular_damp = 2.0
 script = ExtResource("1_d8mom")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
@@ -102,6 +102,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 
 [node name="Walls3" parent="Walls" instance=ExtResource("8_oyk28")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="Walls4" parent="Walls" instance=ExtResource("8_oyk28")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
 
 [node name="GameController" type="Node" parent="." node_paths=PackedStringArray("body", "camera")]
 script = ExtResource("5_r5ij4")
