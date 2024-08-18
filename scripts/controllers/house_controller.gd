@@ -46,10 +46,10 @@ func handle_movement(delta) -> void:
 	
 	var leg_on_ground_count := 0
 	
-	if fl_leg._can_step: leg_on_ground_count += 1
-	if fr_leg._can_step: leg_on_ground_count += 1
-	if bl_leg._can_step: leg_on_ground_count += 1
-	if br_leg._can_step: leg_on_ground_count += 1
+	if fl_leg.is_target_on_ground: leg_on_ground_count += 1
+	if fr_leg.is_target_on_ground: leg_on_ground_count += 1
+	if bl_leg.is_target_on_ground: leg_on_ground_count += 1
+	if br_leg.is_target_on_ground: leg_on_ground_count += 1
 	
 	var leg_force_multiplier := leg_on_ground_count / 4
 	

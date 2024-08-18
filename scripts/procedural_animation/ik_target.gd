@@ -23,14 +23,14 @@ var movement_mode := MOVEMENT_MODE.WALK
 
 var is_stepping := false
 
-var _can_step := false
+var is_target_on_ground := false
 var _in_step_delay := false
 
 
 func _process(_delta: float) -> void:
-	_can_step = step_target.get_meta("is_on_ground", false)
+	is_target_on_ground = step_target.get_meta("is_on_ground", false)
 	
-	if !_can_step:
+	if !is_target_on_ground:
 		return
 	
 	if ray.is_colliding():
@@ -41,7 +41,7 @@ func _process(_delta: float) -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	if !_can_step:
+	if !is_target_on_ground:
 		global_position = global_position.lerp(step_target.global_position, tween_speed)
 	
 	var local_pos = owner.to_local(global_position)
@@ -69,7 +69,7 @@ func _physics_process(_delta: float) -> void:
 
 
 func step() -> void:
-	if !_can_step or _in_step_delay:
+	if !is_target_on_ground or _in_step_delay:
 		return
 	
 	var target_pos := step_target.global_position
