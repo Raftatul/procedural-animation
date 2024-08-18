@@ -4,6 +4,7 @@ extends GameController
 @export var body: RigidBody3D
 @export var speed := 3.0
 @export var turn_speed := 3.0
+@export var linear_damping := 0.0
 
 @onready var fl_leg: IKTarget = $"../Legs/FrontLeftLeg/IKTarget"
 @onready var fr_leg: IKTarget = $"../Legs/FrontRightLeg/IKTarget"
@@ -48,10 +49,24 @@ func _process(delta: float) -> void:
 func handle_movement(delta) -> void:
 	var input := Input.get_axis("ui_up", "ui_down")
 	var rot_input := Input.get_axis("ui_right", "ui_left")
-	var force_multiplier: float = clamp(owner.global_basis.y.dot(Vector3.UP), 0.0, 1.0)
+	var force_multiplier: float = 1.0 + owner.global_basis.z.dot(Vector3.DOWN) * input
 	
-	body.apply_central_force(input * body.global_basis.z * speed * force_multiplier * delta)
-	body.apply_torque(rot_input * body.global_basis.y * turn_speed * delta)
+	var move_force = body.global_basis.z * speed * force_multiplier * delta
+	var rotation_torque = body.global_basis.y * turn_speed * delta
+	
+	var leg_on_ground_count := 0
+	
+	if fl_leg._can_step: leg_on_ground_count += 1
+	if fr_leg._can_step: leg_on_ground_count += 1
+	if bl_leg._can_step: leg_on_ground_count += 1
+	if br_leg._can_step: leg_on_ground_count += 1
+	
+	var leg_force_multiplier := leg_on_ground_count / 4
+	
+	body.linear_damp = linear_damping * leg_force_multiplier
+	
+	body.apply_central_force(input * move_force * leg_force_multiplier)
+	body.apply_torque(rot_input * rotation_torque)
 
 
 func _on_controller_interaction_interacted(controller: GameController) -> void:

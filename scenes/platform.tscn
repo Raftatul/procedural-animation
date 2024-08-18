@@ -26,8 +26,8 @@ collision_mask = 3
 mass = 20.0
 physics_material_override = SubResource("PhysicsMaterial_rle3r")
 continuous_cd = true
-linear_damp = 1.0
-angular_damp = 2.0
+linear_damp = 2.0
+angular_damp = 1.0
 script = ExtResource("1_d8mom")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
@@ -44,6 +44,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -3, -3)
 step_ray = NodePath("../../StepTargetContainer/FrontLeftRay")
 adjacent_leg = NodePath("../FrontRightLeg")
 opposite_leg = NodePath("../BackRightLeg")
+
+[node name="ForceRay" parent="Legs/FrontLeftLeg" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -0.25, -3)
 
 [node name="FrontRightLeg" parent="Legs" node_paths=PackedStringArray("step_ray", "adjacent_leg", "opposite_leg") instance=ExtResource("3_31fkg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -3, -3)
@@ -89,16 +92,28 @@ shape = SubResource("BoxShape3D_lrh4v")
 arm_length = 10.0
 move_speed = 10.0
 
-[node name="GameController" type="Node" parent="." node_paths=PackedStringArray("body", "camera")]
-script = ExtResource("5_r5ij4")
-body = NodePath("..")
-speed = 5000.0
-turn_speed = 10000.0
-camera = NodePath("../Camera")
-
 [node name="Walls" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 
 [node name="Walls" parent="Walls" instance=ExtResource("8_oyk28")]
 
+[node name="Walls2" parent="Walls" instance=ExtResource("8_oyk28")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+
+[node name="Walls3" parent="Walls" instance=ExtResource("8_oyk28")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="GameController" type="Node" parent="." node_paths=PackedStringArray("body", "camera")]
+script = ExtResource("5_r5ij4")
+body = NodePath("..")
+speed = 10000.0
+turn_speed = 10000.0
+linear_damping = 2.0
+is_controlled = true
+camera = NodePath("../Camera")
+
 [connection signal="interacted" from="ControllerInteraction" to="GameController" method="_on_controller_interaction_interacted"]
+
+[editable path="Legs/FrontLeftLeg"]
+[editable path="Legs/FrontLeftLeg/robot_leg"]
+[editable path="Legs/FrontLeftLeg/mecha_leg"]
