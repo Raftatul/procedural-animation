@@ -32,7 +32,7 @@ movie_writer/movie_file="D:/Godot_Projects/procedural-animation/tmp/procedural_a
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/debug_menu/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
+enabled=PackedStringArray("res://addons/csgtomesh/plugin.cfg", "res://addons/debug_menu/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
 
 [file_customization]
 
