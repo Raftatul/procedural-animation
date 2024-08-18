@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://ryqqjm6icw6n"]
 
-[ext_resource type="Script" path="res://tmp/platform.gd" id="1_d8mom"]
+[ext_resource type="Script" path="res://scripts/platform.gd" id="1_d8mom"]
 [ext_resource type="PackedScene" uid="uid://yjtkyxk1jhdj" path="res://scenes/house_components/leg.tscn" id="3_31fkg"]
 [ext_resource type="Script" path="res://scripts/procedural_animation/step_target_container.gd" id="3_uxtip"]
 [ext_resource type="PackedScene" uid="uid://dhj0ufpq0ru8l" path="res://scenes/house_components/step_ray.tscn" id="4_bgjib"]
