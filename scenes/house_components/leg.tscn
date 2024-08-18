@@ -79,6 +79,7 @@ top_level = true
 script = ExtResource("3_3gb2p")
 ray = NodePath("HeightRay")
 front_step_distance = 1.5
+side_step_distance = 0.25
 
 [node name="HeightRayRemote" type="RemoteTransform3D" parent="IKTarget"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

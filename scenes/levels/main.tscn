@@ -123,16 +123,16 @@ shadow_enabled = true
 transform = Transform3D(1.94707e-07, 0, -1, 0, 1, 0, 1, 0, 1.94707e-07, -14.3468, 6.70564, 15.6228)
 
 [node name="ForceRay" parent="Platform/Legs/FrontLeftLeg" index="4"]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -11.3468, 6.45564, 13.6228)
+transform = Transform3D(1.94707e-07, 0, -1, 0, 1, 0, 1, 0, 1.94707e-07, -11.3468, 6.45564, 13.6228)
 
 [node name="ForceRay" parent="Platform/Legs/FrontRightLeg" index="4"]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -11.3468, 6.45564, 17.6228)
+transform = Transform3D(1.94707e-07, 0, -1, 0, 1, 0, 1, 0, 1.94707e-07, -11.3468, 6.45564, 17.6228)
 
 [node name="ForceRay" parent="Platform/Legs/BackLeftLeg" index="4"]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -17.3468, 6.45564, 13.6228)
+transform = Transform3D(1.94707e-07, 0, -1, 0, 1, 0, 1, 0, 1.94707e-07, -17.3468, 6.45564, 13.6228)
 
 [node name="ForceRay" parent="Platform/Legs/BackRightLeg" index="4"]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -17.3468, 6.45564, 17.6228)
+transform = Transform3D(1.94707e-07, 0, -1, 0, 1, 0, 1, 0, 1.94707e-07, -17.3468, 6.45564, 17.6228)
 
 [node name="World" type="Node3D" parent="."]
 

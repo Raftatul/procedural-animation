@@ -51,9 +51,10 @@ func handle_movement(delta) -> void:
 	var force_multiplier: float = 1.0 + owner.global_basis.z.dot(Vector3.DOWN) * input
 	
 	var move_force = body.global_basis.z * speed * force_multiplier * delta
+	var rotation_torque = body.global_basis.y * turn_speed * delta
 	
 	body.apply_central_force(input * move_force)
-	body.apply_torque(rot_input * body.global_basis.y * turn_speed * delta)
+	body.apply_torque(rot_input * rotation_torque)
 
 
 func _on_controller_interaction_interacted(controller: GameController) -> void:
