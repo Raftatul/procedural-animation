@@ -26,7 +26,6 @@ collision_mask = 3
 mass = 20.0
 physics_material_override = SubResource("PhysicsMaterial_rle3r")
 continuous_cd = true
-linear_damp = 2.0
 angular_damp = 2.0
 script = ExtResource("1_d8mom")
 
@@ -44,9 +43,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -3, -3)
 step_ray = NodePath("../../StepTargetContainer/FrontLeftRay")
 adjacent_leg = NodePath("../FrontRightLeg")
 opposite_leg = NodePath("../BackRightLeg")
-
-[node name="ForceRay" parent="Legs/FrontLeftLeg" index="4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -0.25, -3)
 
 [node name="FrontRightLeg" parent="Legs" node_paths=PackedStringArray("step_ray", "adjacent_leg", "opposite_leg") instance=ExtResource("3_31fkg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -3, -3)
@@ -116,7 +112,3 @@ is_controlled = true
 camera = NodePath("../Camera")
 
 [connection signal="interacted" from="ControllerInteraction" to="GameController" method="_on_controller_interaction_interacted"]
-
-[editable path="Legs/FrontLeftLeg"]
-[editable path="Legs/FrontLeftLeg/robot_leg"]
-[editable path="Legs/FrontLeftLeg/mecha_leg"]

@@ -24,8 +24,8 @@ script = ExtResource("2_6a151")
 ik = NodePath("mecha_leg/Armature/Skeleton3D/SkeletonIK3D")
 ik_target = NodePath("IKTarget")
 step_height = 1.0
-force = 200.0
-suspension_height = 1.75
+force = 300.0
+suspension_height = 1.5
 suspension_rest_length = 1.0
 suspension_strength = 50.0
 
@@ -78,8 +78,8 @@ max_iterations = 3
 top_level = true
 script = ExtResource("3_3gb2p")
 ray = NodePath("HeightRay")
-front_step_distance = 2.5
-side_step_distance = 0.25
+front_step_distance = 2.0
+side_step_distance = 0.5
 
 [node name="HeightRayRemote" type="RemoteTransform3D" parent="IKTarget"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
