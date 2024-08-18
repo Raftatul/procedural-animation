@@ -103,6 +103,7 @@ top_level = true
 target_position = Vector3(0, -4, 0)
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+volume_db = -15.0
 script = ExtResource("5_x38ng")
 audio_library = ExtResource("6_jy2ty")
 

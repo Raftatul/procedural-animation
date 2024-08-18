@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AudioLibrary" load_steps=5 format=3 uid="uid://b8aebpvxrwlb4"]
+
+[ext_resource type="Script" path="res://scripts/data_scripts/audio_library.gd" id="1_cwmgv"]
+[ext_resource type="Script" path="res://scripts/data_scripts/sound_effect.gd" id="2_3t3lg"]
+[ext_resource type="AudioStream" uid="uid://d2tjgwn43yo4w" path="res://assets/audios/character/hurt.mp3" id="3_g1mui"]
+
+[sub_resource type="Resource" id="Resource_l8135"]
+script = ExtResource("2_3t3lg")
+tag = "Hurt"
+stream = ExtResource("3_g1mui")
+
+[resource]
+script = ExtResource("1_cwmgv")
+sound_effects = Array[ExtResource("2_3t3lg")]([SubResource("Resource_l8135")])

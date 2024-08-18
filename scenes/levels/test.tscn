@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://d1gpxr5fir24l"]
+[gd_scene load_steps=18 format=4 uid="uid://d1gpxr5fir24l"]
 
 [ext_resource type="PackedScene" uid="uid://ryqqjm6icw6n" path="res://scenes/platform.tscn" id="1_q7s8b"]
 [ext_resource type="Material" uid="uid://ckhcyl414qb2a" path="res://ressources/materials/grids/dark/grid_dark_1.tres" id="2_2686l"]
@@ -107,6 +107,10 @@ _data = {
 "new_animation": SubResource("Animation_4r0mf")
 }
 
+[sub_resource type="BoxMesh" id="BoxMesh_w53ot"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cgelp"]
+
 [node name="Test" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -157,3 +161,12 @@ libraries = {
 "": SubResource("AnimationLibrary_itf8q")
 }
 autoplay = "new_animation"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.37776, -13)
+mesh = SubResource("BoxMesh_w53ot")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_cgelp")

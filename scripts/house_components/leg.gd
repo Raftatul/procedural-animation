@@ -1,6 +1,12 @@
 class_name Leg
 extends Node3D
 
+@export var active := true :
+	set(value):
+		active = value
+		
+		ik_target.active = value
+		set_physics_process(value)
 
 @export var step_ray: StepRay
 @export var adjacent_leg: Leg

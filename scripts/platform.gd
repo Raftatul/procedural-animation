@@ -41,3 +41,10 @@ func _basis_from_normal(normal: Vector3) -> Basis:
 	result.z *= scale.z
 	
 	return result
+
+
+func _on_area_3d_body_entered(body: Node3D) -> void:
+	for leg in $Legs.get_children():
+		leg.active = false
+	
+	$CustomAudioStreamPlayer3D.play_stream("Hurt")

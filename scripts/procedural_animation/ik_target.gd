@@ -6,6 +6,13 @@ signal target_reached
 
 enum MOVEMENT_MODE {WALK, RUN}
 
+@export var active := true :
+	set(value):
+		active = value
+		
+		set_process(value)
+		set_physics_process(value)
+
 @export var ray: RayCast3D
 
 @export_group("Parameters")

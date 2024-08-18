@@ -17,5 +17,9 @@ func play_stream(tag:String, from_position: float = 0.0) -> void:
 	if !playing: play()
 	
 	var audio_stream := audio_library.get_audio_stream(tag)
+	
+	if not audio_stream:
+		return
+	
 	var polyphonic_stream_playback := self.get_stream_playback()
 	polyphonic_stream_playback.play_stream(audio_stream, from_position)
