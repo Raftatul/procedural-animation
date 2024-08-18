@@ -108,6 +108,7 @@ script = ExtResource("5_r5ij4")
 body = NodePath("..")
 speed = 10000.0
 turn_speed = 10000.0
+linear_damping = 2.0
 is_controlled = true
 camera = NodePath("../Camera")
 
