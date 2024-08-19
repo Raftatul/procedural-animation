@@ -45,7 +45,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		_rotate_camera(movement)
 
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
 	
