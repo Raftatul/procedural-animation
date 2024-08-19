@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://scripts/controllers/house_controller.gd" id="5_r5ij4"]
 [ext_resource type="PackedScene" uid="uid://c4e3gho1nk0tf" path="res://scenes/camera_controller.tscn" id="6_3d05v"]
 [ext_resource type="Script" path="res://scripts/interactable.gd" id="7_nj3ml"]
-[ext_resource type="PackedScene" uid="uid://bicee3qh0bef8" path="res://scenes/house_components/walls.tscn" id="8_oyk28"]
+[ext_resource type="Script" path="res://scripts/house_components/health.gd" id="8_48h8o"]
 [ext_resource type="Script" path="res://scripts/nodes/custom_audio_stream_player_3d.gd" id="9_6wird"]
 [ext_resource type="Resource" uid="uid://b8aebpvxrwlb4" path="res://ressources/audio_lib/character.tres" id="10_1ak0v"]
 
@@ -32,11 +32,9 @@ collision_mask = 3
 mass = 20.0
 physics_material_override = SubResource("PhysicsMaterial_rle3r")
 continuous_cd = true
-angular_damp = 2.0
 script = ExtResource("1_d8mom")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.199614, 0)
 shape = SubResource("BoxShape3D_fan7y")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -94,29 +92,16 @@ shape = SubResource("BoxShape3D_lrh4v")
 arm_length = 10.0
 move_speed = 10.0
 
-[node name="Walls" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
-
-[node name="Walls" parent="Walls" instance=ExtResource("8_oyk28")]
-
-[node name="Walls2" parent="Walls" instance=ExtResource("8_oyk28")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
-
-[node name="Walls3" parent="Walls" instance=ExtResource("8_oyk28")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-
-[node name="Walls4" parent="Walls" instance=ExtResource("8_oyk28")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.37858, -4.23568)
+[node name="Character" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.87858, -4.23568)
 mesh = SubResource("CapsuleMesh_oq3ex")
 
-[node name="Area3D" type="Area3D" parent="MeshInstance3D2"]
+[node name="Health" type="Area3D" parent="Character"]
 collision_layer = 0
 monitorable = false
+script = ExtResource("8_48h8o")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Character/Health"]
 shape = SubResource("CapsuleShape3D_gh5rh")
 
 [node name="CustomAudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
@@ -129,8 +114,10 @@ body = NodePath("..")
 speed = 10000.0
 turn_speed = 10000.0
 linear_damping = 2.0
+angular_damping = 2.0
 is_controlled = true
 camera = NodePath("../Camera")
 
 [connection signal="interacted" from="ControllerInteraction" to="GameController" method="_on_controller_interaction_interacted"]
-[connection signal="body_entered" from="MeshInstance3D2/Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="die" from="Character/Health" to="." method="_on_health_die"]
+[connection signal="die" from="Character/Health" to="GameController" method="_on_health_die"]

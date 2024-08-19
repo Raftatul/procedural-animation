@@ -1,5 +1,6 @@
 extends Node3D
 
+
 #@export var height_offset := 1.0
 @export var align_speed := 5.0
 
@@ -43,7 +44,7 @@ func _basis_from_normal(normal: Vector3) -> Basis:
 	return result
 
 
-func _on_area_3d_body_entered(body: Node3D) -> void:
+func _on_health_die() -> void:
 	for leg in $Legs.get_children():
 		leg.active = false
 	
