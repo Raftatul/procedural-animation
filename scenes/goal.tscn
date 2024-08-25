@@ -1,6 +1,45 @@
-[gd_scene load_steps=2 format=3 uid="uid://0c3m5bjuaal5"]
+[gd_scene load_steps=7 format=3 uid="uid://0c3m5bjuaal5"]
 
 [ext_resource type="Script" path="res://scripts/goal.gd" id="1_7uur4"]
+[ext_resource type="PackedScene" uid="uid://dgsn7q48w5sod" path="res://assets/meshs/goal.glb" id="1_updfa"]
+[ext_resource type="Script" path="res://scripts/force_field.gd" id="3_jvsnn"]
 
-[node name="Goal" type="Area3D"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_rwpd7"]
+size = Vector3(6, 13, 8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yj72h"]
+size = Vector3(1.25, 0.25, 1.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uoe1c"]
+size = Vector3(2, 9.5, 2)
+
+[node name="Goal" type="StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 6.5, 0)
+shape = SubResource("BoxShape3D_rwpd7")
+
+[node name="goal" parent="." instance=ExtResource("1_updfa")]
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.91403, 0)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
 script = ExtResource("1_7uur4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_yj72h")
+
+[node name="ForceField" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+gravity_point_center = Vector3(0, 0, 0)
+gravity_direction = Vector3(0, 0, 0)
+script = ExtResource("3_jvsnn")
+force = 1000.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForceField"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.7442, 0)
+shape = SubResource("BoxShape3D_uoe1c")

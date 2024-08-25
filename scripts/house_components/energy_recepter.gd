@@ -8,10 +8,10 @@ signal received_energy
 
 
 func _ready() -> void:
-	body_entered.connect(_on_body_entered)
+	area_entered.connect(_on_area_entered)
 
 
-func _on_body_entered(body: Node3D) -> void:
+func _on_area_entered(body: Area3D) -> void:
 	if body is EnergyCell:
 		received_energy.emit()
 		battery.add_charge(body.energy_amount)

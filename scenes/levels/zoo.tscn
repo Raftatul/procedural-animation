@@ -1,9 +1,11 @@
-[gd_scene load_steps=19 format=4 uid="uid://d1gpxr5fir24l"]
+[gd_scene load_steps=21 format=4 uid="uid://d1gpxr5fir24l"]
 
 [ext_resource type="PackedScene" uid="uid://ryqqjm6icw6n" path="res://scenes/platform.tscn" id="1_mjkdx"]
 [ext_resource type="Material" uid="uid://ckhcyl414qb2a" path="res://ressources/materials/grids/dark/grid_dark_1.tres" id="2_0xj1x"]
 [ext_resource type="Material" uid="uid://u4oedl4jguwi" path="res://ressources/materials/grids/orange/grid_orange_1.tres" id="3_alkag"]
 [ext_resource type="PackedScene" uid="uid://d2iihx3nb81mq" path="res://scenes/props/energy_cell.tscn" id="4_75lrn"]
+[ext_resource type="PackedScene" uid="uid://bx7hts6huuyr3" path="res://scenes/ball.tscn" id="5_k1l1o"]
+[ext_resource type="PackedScene" uid="uid://0c3m5bjuaal5" path="res://scenes/goal.tscn" id="6_chk08"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bb4if"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -108,9 +110,9 @@ _data = {
 "new_animation": SubResource("Animation_4r0mf")
 }
 
-[sub_resource type="BoxMesh" id="BoxMesh_w53ot"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_tvmsv"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_cgelp"]
+[sub_resource type="BoxMesh" id="BoxMesh_mbxk3"]
 
 [node name="Test" type="Node3D"]
 
@@ -120,9 +122,6 @@ shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_a5pu3")
-
-[node name="Platform" parent="." instance=ExtResource("1_mjkdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.6873, 0)
 
 [node name="World" type="Node3D" parent="."]
 
@@ -163,25 +162,33 @@ libraries = {
 }
 autoplay = "new_animation"
 
-[node name="Props" type="Node3D" parent="World"]
+[node name="Goal" parent="World" instance=ExtResource("6_chk08")]
+transform = Transform3D(-0.569045, 0, -0.00732998, 0, 0.569092, 0, 0.00732998, 0, -0.569045, -7.66725, 0.5, -9.77052)
 
-[node name="EnergyCell" parent="World/Props" instance=ExtResource("4_75lrn")]
+[node name="Props" type="Node3D" parent="."]
+
+[node name="EnergyCell" parent="Props" instance=ExtResource("4_75lrn")]
 transform = Transform3D(1, 0, 0, 0, 0.998942, -0.0459907, 0, 0.0459907, 0.998942, 4.07578, 1.5915, -12.7351)
 
-[node name="EnergyCell2" parent="World/Props" instance=ExtResource("4_75lrn")]
+[node name="EnergyCell2" parent="Props" instance=ExtResource("4_75lrn")]
 transform = Transform3D(1, 0, 0, 0, 0.998942, -0.0459907, 0, 0.0459907, 0.998942, 4.2594, 1.5915, -8.99943)
 
-[node name="EnergyCell3" parent="World/Props" instance=ExtResource("4_75lrn")]
+[node name="EnergyCell3" parent="Props" instance=ExtResource("4_75lrn")]
 transform = Transform3D(1, 0, 0, 0, 0.998942, -0.0459907, 0, 0.0459907, 0.998942, -3.89573, 1.5915, -5.68812)
 
-[node name="EnergyCell4" parent="World/Props" instance=ExtResource("4_75lrn")]
+[node name="EnergyCell4" parent="Props" instance=ExtResource("4_75lrn")]
 transform = Transform3D(1, 0, 0, 0, 0.998942, -0.0459907, 0, 0.0459907, 0.998942, -5.22874, 1.5915, -0.0583649)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.37776, -13)
-mesh = SubResource("BoxMesh_w53ot")
+[node name="Ball" parent="Props" instance=ExtResource("5_k1l1o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.16389, 0)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+[node name="CollisionShape3D" parent="Props/Ball" index="0"]
+shape = SubResource("BoxShape3D_tvmsv")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
-shape = SubResource("BoxShape3D_cgelp")
+[node name="MeshInstance3D" parent="Props/Ball" index="1"]
+mesh = SubResource("BoxMesh_mbxk3")
+
+[node name="Platform" parent="." instance=ExtResource("1_mjkdx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.6873, 0)
+
+[editable path="Props/Ball"]

@@ -128,6 +128,19 @@ shape = SubResource("CapsuleShape3D_gh5rh")
 script = ExtResource("9_6wird")
 audio_library = ExtResource("10_1ak0v")
 
+[node name="EnergyRecepteur" type="Area3D" parent="." node_paths=PackedStringArray("battery")]
+monitorable = false
+script = ExtResource("13_j0tn5")
+battery = NodePath("../Battery")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnergyRecepteur"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.39844, 0)
+shape = SubResource("BoxShape3D_adtqg")
+
+[node name="CustomAudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="EnergyRecepteur"]
+script = ExtResource("9_6wird")
+audio_library = SubResource("Resource_mpqvg")
+
 [node name="GameController" type="Node" parent="." node_paths=PackedStringArray("body", "camera")]
 script = ExtResource("5_r5ij4")
 body = NodePath("..")
@@ -180,23 +193,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 
-[node name="EnergyRecepteur" type="Area3D" parent="." node_paths=PackedStringArray("battery")]
-monitorable = false
-script = ExtResource("13_j0tn5")
-battery = NodePath("../Battery")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="EnergyRecepteur"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.39844, 0)
-shape = SubResource("BoxShape3D_adtqg")
-
-[node name="CustomAudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="EnergyRecepteur"]
-script = ExtResource("9_6wird")
-audio_library = SubResource("Resource_mpqvg")
-
 [connection signal="interacted" from="ControllerInteraction" to="GameController" method="_on_controller_interaction_interacted"]
 [connection signal="die" from="Character/Health" to="." method="kill"]
+[connection signal="received_energy" from="EnergyRecepteur" to="EnergyRecepteur/CustomAudioStreamPlayer3D" method="play_stream" binds= ["Energy"]]
 [connection signal="charge_changed" from="Battery" to="CanvasLayer/MarginContainer/Control/HBoxContainer/ProgressBar" method="set_value"]
 [connection signal="max_charge_changed" from="Battery" to="CanvasLayer/MarginContainer/Control/HBoxContainer/ProgressBar" method="set_max"]
 [connection signal="power_off" from="Battery" to="." method="kill"]
 [connection signal="power_on" from="Battery" to="." method="ressurect"]
-[connection signal="received_energy" from="EnergyRecepteur" to="EnergyRecepteur/CustomAudioStreamPlayer3D" method="play_stream" binds= ["Energy"]]
