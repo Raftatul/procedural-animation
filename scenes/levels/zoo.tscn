@@ -163,7 +163,7 @@ libraries = {
 autoplay = "new_animation"
 
 [node name="Goal" parent="World" instance=ExtResource("6_chk08")]
-transform = Transform3D(-0.569045, 0, -0.00732998, 0, 0.569092, 0, 0.00732998, 0, -0.569045, -7.66725, 0.5, -9.77052)
+transform = Transform3D(-0.569045, 0, -0.00732998, 0, 0.569092, 0, 0.00732998, 0, -0.569045, -0.273013, 0.5, -12.0005)
 
 [node name="Props" type="Node3D" parent="."]
 
@@ -188,7 +188,47 @@ shape = SubResource("BoxShape3D_tvmsv")
 [node name="MeshInstance3D" parent="Props/Ball" index="1"]
 mesh = SubResource("BoxMesh_mbxk3")
 
+[node name="Ball4" parent="Props" instance=ExtResource("5_k1l1o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.61197, 0)
+
+[node name="CollisionShape3D" parent="Props/Ball4" index="0"]
+shape = SubResource("BoxShape3D_tvmsv")
+
+[node name="MeshInstance3D" parent="Props/Ball4" index="1"]
+mesh = SubResource("BoxMesh_mbxk3")
+
+[node name="Ball5" parent="Props" instance=ExtResource("5_k1l1o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.9959, 0)
+
+[node name="CollisionShape3D" parent="Props/Ball5" index="0"]
+shape = SubResource("BoxShape3D_tvmsv")
+
+[node name="MeshInstance3D" parent="Props/Ball5" index="1"]
+mesh = SubResource("BoxMesh_mbxk3")
+
+[node name="Ball2" parent="Props" instance=ExtResource("5_k1l1o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.16389, 1.47337)
+
+[node name="CollisionShape3D" parent="Props/Ball2" index="0"]
+shape = SubResource("BoxShape3D_tvmsv")
+
+[node name="MeshInstance3D" parent="Props/Ball2" index="1"]
+mesh = SubResource("BoxMesh_mbxk3")
+
+[node name="Ball3" parent="Props" instance=ExtResource("5_k1l1o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.16389, -1.76817)
+
+[node name="CollisionShape3D" parent="Props/Ball3" index="0"]
+shape = SubResource("BoxShape3D_tvmsv")
+
+[node name="MeshInstance3D" parent="Props/Ball3" index="1"]
+mesh = SubResource("BoxMesh_mbxk3")
+
 [node name="Platform" parent="." instance=ExtResource("1_mjkdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.6873, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.78687, 0)
 
 [editable path="Props/Ball"]
+[editable path="Props/Ball4"]
+[editable path="Props/Ball5"]
+[editable path="Props/Ball2"]
+[editable path="Props/Ball3"]
