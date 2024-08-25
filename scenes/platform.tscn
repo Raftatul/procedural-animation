@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://ryqqjm6icw6n"]
+[gd_scene load_steps=27 format=3 uid="uid://ryqqjm6icw6n"]
 
 [ext_resource type="Script" path="res://scripts/platform.gd" id="1_d8mom"]
 [ext_resource type="PackedScene" uid="uid://yjtkyxk1jhdj" path="res://scenes/house_components/leg.tscn" id="3_31fkg"]
@@ -43,6 +43,9 @@ stream = ExtResource("16_c5qrq")
 [sub_resource type="Resource" id="Resource_mpqvg"]
 script = ExtResource("14_1sey0")
 sound_effects = Array[ExtResource("15_g5fne")]([SubResource("Resource_akjee")])
+
+[sub_resource type="LabelSettings" id="LabelSettings_nboqk"]
+font_size = 32
 
 [node name="Platform" type="RigidBody3D"]
 collision_layer = 2
@@ -193,6 +196,21 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 
+[node name="GearDisplay" type="Label" parent="CanvasLayer/MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -167.0
+offset_right = 40.0
+offset_bottom = -122.0
+grow_vertical = 0
+text = "3"
+label_settings = SubResource("LabelSettings_nboqk")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="gear_changed" from="." to="CanvasLayer/MarginContainer/Control/GearDisplay" method="set_text"]
 [connection signal="interacted" from="ControllerInteraction" to="GameController" method="_on_controller_interaction_interacted"]
 [connection signal="die" from="Character/Health" to="." method="kill"]
 [connection signal="received_energy" from="EnergyRecepteur" to="EnergyRecepteur/CustomAudioStreamPlayer3D" method="play_stream" binds= ["Energy"]]

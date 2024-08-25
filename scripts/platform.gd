@@ -1,6 +1,8 @@
 extends Node3D
 
 
+signal gear_changed(value: float)
+
 #@export var height_offset := 1.0
 @export var align_speed := 5.0
 
@@ -11,9 +13,15 @@ extends Node3D
 @onready var br_leg: IKTarget = $Legs/BackRightLeg/IKTarget
 @onready var battery: Battery = $Battery
 
+var gear_force := 1.0 :
+	set(value):
+		gear_force = clamp(value, 0.0, 1.0)
+		gear_changed.emit(gear_force)
+
 
 func _ready() -> void:
 	battery.consumption = 1.0
+	gear_force = gear_force
 
 
 func _physics_process(delta: float) -> void:

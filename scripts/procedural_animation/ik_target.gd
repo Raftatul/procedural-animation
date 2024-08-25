@@ -62,9 +62,6 @@ func _physics_process(_delta: float) -> void:
 	var side_condition = !side_distance > side_step_distance
 	var max_condition = !max_distance > max(front_step_distance, side_step_distance)
 	
-	DebugDraw3D.draw_arrow(global_position, global_position + -owner.global_basis.z * front_distance, Color.GREEN, 0.25)
-	DebugDraw3D.draw_arrow(global_position, global_position + -owner.global_basis.x * side_distance, Color.GREEN, 0.25)
-	
 	if front_condition and side_condition and max_condition:
 		return
 	

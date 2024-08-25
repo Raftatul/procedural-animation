@@ -31,7 +31,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		fr_leg.movement_mode = fl_leg.MOVEMENT_MODE.WALK
 		bl_leg.movement_mode = fl_leg.MOVEMENT_MODE.WALK
 		br_leg.movement_mode = fl_leg.MOVEMENT_MODE.WALK
-
+	elif event.is_action_pressed("gear_up"):
+		body.gear_force += 0.1
+	elif event.is_action_pressed("gear_down"):
+		body.gear_force -= 0.1
 
 func _process(delta: float) -> void:
 	handle_movement(delta)
@@ -50,8 +53,8 @@ func handle_movement(delta) -> void:
 	body.linear_damp = linear_damping * leg_force_multiplier
 	body.angular_damp = angular_damping * leg_force_multiplier
 	
-	body.apply_central_force(input * move_force * leg_force_multiplier)
-	body.apply_torque(rot_input * rotation_torque * leg_force_multiplier)
+	body.apply_central_force(input * move_force * leg_force_multiplier * body.gear_force)
+	body.apply_torque(rot_input * rotation_torque * leg_force_multiplier * body.gear_force)
 
 
 func _get_leg_on_ground_percent() -> float:
