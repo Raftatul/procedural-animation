@@ -1,7 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://0c3m5bjuaal5"]
+[gd_scene load_steps=14 format=3 uid="uid://0c3m5bjuaal5"]
 
 [ext_resource type="Script" path="res://scripts/goal.gd" id="1_7uur4"]
-[ext_resource type="PackedScene" uid="uid://dgsn7q48w5sod" path="res://assets/meshs/goal.glb" id="1_updfa"]
+[ext_resource type="PackedScene" uid="uid://flg26257hgtg" path="res://assets/meshs/blender/goal.blend" id="1_emqqv"]
 [ext_resource type="Script" path="res://scripts/force_field.gd" id="3_jvsnn"]
 [ext_resource type="Script" path="res://scripts/nodes/custom_audio_stream_player_3d.gd" id="4_qtmvt"]
 [ext_resource type="Script" path="res://scripts/data_scripts/audio_library.gd" id="5_kwmy1"]
@@ -11,11 +11,14 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_rwpd7"]
 size = Vector3(6, 13, 8)
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_v2rsg"]
+radius = 1.2607
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_yj72h"]
 size = Vector3(1.25, 0.25, 1.25)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uoe1c"]
-size = Vector3(4, 9.5, 4)
+size = Vector3(4, 9.25, 4)
 
 [sub_resource type="Resource" id="Resource_em0jt"]
 script = ExtResource("6_avvcu")
@@ -32,7 +35,11 @@ sound_effects = Array[ExtResource("6_avvcu")]([SubResource("Resource_em0jt")])
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 6.5, 0)
 shape = SubResource("BoxShape3D_rwpd7")
 
-[node name="goal" parent="." instance=ExtResource("1_updfa")]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.0805, 0)
+shape = SubResource("CylinderShape3D_v2rsg")
+
+[node name="goal" parent="." instance=ExtResource("1_emqqv")]
 
 [node name="Area3D" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.91403, 0)
@@ -44,17 +51,18 @@ script = ExtResource("1_7uur4")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("BoxShape3D_yj72h")
 
-[node name="ForceField" type="Area3D" parent="."]
+[node name="ForceField" type="Area3D" parent="." node_paths=PackedStringArray("attraction_point")]
 collision_layer = 0
 collision_mask = 2
 monitorable = false
 gravity_point_center = Vector3(0, 0, 0)
 gravity_direction = Vector3(0, 0, 0)
 script = ExtResource("3_jvsnn")
+attraction_point = NodePath("../Area3D")
 force = 40.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ForceField"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.7442, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.6192, 0)
 shape = SubResource("BoxShape3D_uoe1c")
 
 [node name="CustomAudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
