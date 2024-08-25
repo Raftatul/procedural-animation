@@ -51,7 +51,7 @@ monitorable = false
 gravity_point_center = Vector3(0, 0, 0)
 gravity_direction = Vector3(0, 0, 0)
 script = ExtResource("3_jvsnn")
-force = 100.0
+force = 40.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ForceField"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.7442, 0)
