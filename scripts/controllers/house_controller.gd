@@ -41,7 +41,7 @@ func _process(delta: float) -> void:
 
 
 func handle_movement(delta) -> void:
-	var input := Input.get_axis("ui_up", "ui_down")
+	var input := Input.get_axis("move_forward", "move_backward")
 	var rot_input := Input.get_axis("ui_right", "ui_left")
 	var force_multiplier: float = 1.0 + owner.global_basis.z.dot(Vector3.DOWN) * input
 	
