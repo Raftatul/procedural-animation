@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://ryqqjm6icw6n"]
+[gd_scene load_steps=28 format=3 uid="uid://ryqqjm6icw6n"]
 
 [ext_resource type="Script" path="res://scripts/platform.gd" id="1_d8mom"]
 [ext_resource type="PackedScene" uid="uid://yjtkyxk1jhdj" path="res://scenes/house_components/leg.tscn" id="3_31fkg"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://scripts/data_scripts/audio_library.gd" id="14_1sey0"]
 [ext_resource type="Script" path="res://scripts/data_scripts/sound_effect.gd" id="15_g5fne"]
 [ext_resource type="AudioStream" uid="uid://cdvq4ifblbfuq" path="res://assets/audios/energy-drink-effect-230559.mp3" id="16_c5qrq"]
+[ext_resource type="Texture2D" uid="uid://ce323bhebguow" path="res://assets/sprites/gears.png" id="17_ufkjk"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_rle3r"]
 
@@ -196,21 +197,32 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 
-[node name="GearDisplay" type="Label" parent="CanvasLayer/MarginContainer/Control"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/MarginContainer/Control"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -167.0
-offset_right = 40.0
-offset_bottom = -122.0
+offset_top = -131.0
+offset_right = 86.0
+offset_bottom = -67.0
 grow_vertical = 0
+theme_override_constants/separation = 21
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MarginContainer/Control/HBoxContainer2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("17_ufkjk")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="GearDisplay" type="Label" parent="CanvasLayer/MarginContainer/Control/HBoxContainer2"]
+layout_mode = 2
 text = "3"
 label_settings = SubResource("LabelSettings_nboqk")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="gear_changed" from="." to="CanvasLayer/MarginContainer/Control/GearDisplay" method="set_text"]
+[connection signal="gear_changed" from="." to="CanvasLayer/MarginContainer/Control/HBoxContainer2/GearDisplay" method="set_text"]
 [connection signal="interacted" from="ControllerInteraction" to="GameController" method="_on_controller_interaction_interacted"]
 [connection signal="die" from="Character/Health" to="." method="kill"]
 [connection signal="received_energy" from="EnergyRecepteur" to="EnergyRecepteur/CustomAudioStreamPlayer3D" method="play_stream" binds= ["Energy"]]
