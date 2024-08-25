@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://ryqqjm6icw6n"]
+[gd_scene load_steps=26 format=3 uid="uid://ryqqjm6icw6n"]
 
 [ext_resource type="Script" path="res://scripts/platform.gd" id="1_d8mom"]
 [ext_resource type="PackedScene" uid="uid://yjtkyxk1jhdj" path="res://scenes/house_components/leg.tscn" id="3_31fkg"]
@@ -10,6 +10,12 @@
 [ext_resource type="Script" path="res://scripts/house_components/health.gd" id="8_48h8o"]
 [ext_resource type="Script" path="res://scripts/nodes/custom_audio_stream_player_3d.gd" id="9_6wird"]
 [ext_resource type="Resource" uid="uid://b8aebpvxrwlb4" path="res://ressources/audio_lib/character.tres" id="10_1ak0v"]
+[ext_resource type="Script" path="res://scripts/house_components/battery.gd" id="11_cpe0q"]
+[ext_resource type="Texture2D" uid="uid://dyobh5fyay74l" path="res://assets/sprites/icons8-éclair-90.png" id="12_gxudx"]
+[ext_resource type="Script" path="res://scripts/house_components/energy_recepter.gd" id="13_j0tn5"]
+[ext_resource type="Script" path="res://scripts/data_scripts/audio_library.gd" id="14_1sey0"]
+[ext_resource type="Script" path="res://scripts/data_scripts/sound_effect.gd" id="15_g5fne"]
+[ext_resource type="AudioStream" uid="uid://cdvq4ifblbfuq" path="res://assets/audios/energy-drink-effect-230559.mp3" id="16_c5qrq"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_rle3r"]
 
@@ -25,6 +31,18 @@ size = Vector3(4.00098, 1.98584, 7.04199)
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_oq3ex"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gh5rh"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_adtqg"]
+size = Vector3(3.93457, 3.79688, 6.76855)
+
+[sub_resource type="Resource" id="Resource_akjee"]
+script = ExtResource("15_g5fne")
+tag = "Energy"
+stream = ExtResource("16_c5qrq")
+
+[sub_resource type="Resource" id="Resource_mpqvg"]
+script = ExtResource("14_1sey0")
+sound_effects = Array[ExtResource("15_g5fne")]([SubResource("Resource_akjee")])
 
 [node name="Platform" type="RigidBody3D"]
 collision_layer = 2
@@ -81,6 +99,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9, 0.605413, 2.9)
 [node name="BackRightRay" parent="StepTargetContainer" instance=ExtResource("4_bgjib")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9, 0.605413, 2.9)
 
+[node name="Walls" type="Node3D" parent="."]
+
 [node name="ControllerInteraction" type="Area3D" parent="."]
 script = ExtResource("7_nj3ml")
 
@@ -118,6 +138,65 @@ angular_damping = 2.0
 is_controlled = true
 camera = NodePath("../Camera")
 
+[node name="Battery" type="Node" parent="."]
+script = ExtResource("11_cpe0q")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Control" type="Control" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 208.0
+grow_vertical = 0
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MarginContainer/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("12_gxudx")
+expand_mode = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/MarginContainer/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="EnergyRecepteur" type="Area3D" parent="." node_paths=PackedStringArray("battery")]
+monitorable = false
+script = ExtResource("13_j0tn5")
+battery = NodePath("../Battery")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnergyRecepteur"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.39844, 0)
+shape = SubResource("BoxShape3D_adtqg")
+
+[node name="CustomAudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="EnergyRecepteur"]
+script = ExtResource("9_6wird")
+audio_library = SubResource("Resource_mpqvg")
+
 [connection signal="interacted" from="ControllerInteraction" to="GameController" method="_on_controller_interaction_interacted"]
-[connection signal="die" from="Character/Health" to="." method="_on_health_die"]
-[connection signal="die" from="Character/Health" to="GameController" method="_on_health_die"]
+[connection signal="die" from="Character/Health" to="." method="kill"]
+[connection signal="charge_changed" from="Battery" to="CanvasLayer/MarginContainer/Control/HBoxContainer/ProgressBar" method="set_value"]
+[connection signal="max_charge_changed" from="Battery" to="CanvasLayer/MarginContainer/Control/HBoxContainer/ProgressBar" method="set_max"]
+[connection signal="power_off" from="Battery" to="." method="kill"]
+[connection signal="power_on" from="Battery" to="." method="ressurect"]
+[connection signal="received_energy" from="EnergyRecepteur" to="EnergyRecepteur/CustomAudioStreamPlayer3D" method="play_stream" binds= ["Energy"]]

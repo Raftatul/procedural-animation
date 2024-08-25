@@ -1,8 +1,9 @@
-[gd_scene load_steps=18 format=4 uid="uid://d1gpxr5fir24l"]
+[gd_scene load_steps=19 format=4 uid="uid://d1gpxr5fir24l"]
 
-[ext_resource type="PackedScene" uid="uid://ryqqjm6icw6n" path="res://scenes/platform.tscn" id="1_q7s8b"]
-[ext_resource type="Material" uid="uid://ckhcyl414qb2a" path="res://ressources/materials/grids/dark/grid_dark_1.tres" id="2_2686l"]
-[ext_resource type="Material" uid="uid://u4oedl4jguwi" path="res://ressources/materials/grids/orange/grid_orange_1.tres" id="3_jcsaf"]
+[ext_resource type="PackedScene" uid="uid://ryqqjm6icw6n" path="res://scenes/platform.tscn" id="1_mjkdx"]
+[ext_resource type="Material" uid="uid://ckhcyl414qb2a" path="res://ressources/materials/grids/dark/grid_dark_1.tres" id="2_0xj1x"]
+[ext_resource type="Material" uid="uid://u4oedl4jguwi" path="res://ressources/materials/grids/orange/grid_orange_1.tres" id="3_alkag"]
+[ext_resource type="PackedScene" uid="uid://d2iihx3nb81mq" path="res://scenes/props/energy_cell.tscn" id="4_75lrn"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bb4if"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -24,7 +25,7 @@ _surfaces = [{
 "format": 34359742487,
 "index_count": 36,
 "index_data": PackedByteArray("AAABAAIAAgADAAAABAAFAAYABgAHAAQACAAJAAoACgALAAgADAANAA4ADgAPAAwAEAARABIAEgATABAAFAAVABYAFgAXABQA"),
-"material": ExtResource("2_2686l"),
+"material": ExtResource("2_0xj1x"),
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 24,
@@ -41,7 +42,7 @@ _surfaces = [{
 "format": 34359742487,
 "index_count": 36,
 "index_data": PackedByteArray("AAABAAIAAgADAAAABAAFAAYABgAHAAQACAAJAAoACgALAAgADAANAA4ADgAPAAwAEAARABIAEgATABAAFAAVABYAFgAXABQA"),
-"material": ExtResource("2_2686l"),
+"material": ExtResource("2_0xj1x"),
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 24,
@@ -58,7 +59,7 @@ _surfaces = [{
 "format": 34359742487,
 "index_count": 36,
 "index_data": PackedByteArray("AAABAAIAAgADAAAABAAFAAYABgAHAAQACAAJAAoACgALAAgADAANAA4ADgAPAAwAEAARABIAEgATABAAFAAVABYAFgAXABQA"),
-"material": ExtResource("2_2686l"),
+"material": ExtResource("2_0xj1x"),
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 24,
@@ -120,7 +121,7 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_a5pu3")
 
-[node name="Platform" parent="." instance=ExtResource("1_q7s8b")]
+[node name="Platform" parent="." instance=ExtResource("1_mjkdx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.6873, 0)
 
 [node name="World" type="Node3D" parent="."]
@@ -154,13 +155,27 @@ shape = SubResource("ConcavePolygonShape3D_crrvj")
 [node name="CSGBox3D4" type="CSGBox3D" parent="World"]
 use_collision = true
 size = Vector3(3, 1, 3)
-material = ExtResource("3_jcsaf")
+material = ExtResource("3_alkag")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="World/CSGBox3D4"]
 libraries = {
 "": SubResource("AnimationLibrary_itf8q")
 }
 autoplay = "new_animation"
+
+[node name="Props" type="Node3D" parent="World"]
+
+[node name="EnergyCell" parent="World/Props" instance=ExtResource("4_75lrn")]
+transform = Transform3D(1, 0, 0, 0, 0.998942, -0.0459907, 0, 0.0459907, 0.998942, 4.07578, 1.5915, -12.7351)
+
+[node name="EnergyCell2" parent="World/Props" instance=ExtResource("4_75lrn")]
+transform = Transform3D(1, 0, 0, 0, 0.998942, -0.0459907, 0, 0.0459907, 0.998942, 4.2594, 1.5915, -8.99943)
+
+[node name="EnergyCell3" parent="World/Props" instance=ExtResource("4_75lrn")]
+transform = Transform3D(1, 0, 0, 0, 0.998942, -0.0459907, 0, 0.0459907, 0.998942, -3.89573, 1.5915, -5.68812)
+
+[node name="EnergyCell4" parent="World/Props" instance=ExtResource("4_75lrn")]
+transform = Transform3D(1, 0, 0, 0, 0.998942, -0.0459907, 0, 0.0459907, 0.998942, -5.22874, 1.5915, -0.0583649)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.37776, -13)

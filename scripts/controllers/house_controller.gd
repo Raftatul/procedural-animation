@@ -62,7 +62,7 @@ func _get_leg_on_ground_percent() -> float:
 	if bl_leg.is_target_on_ground: leg_on_ground_count += 1
 	if br_leg.is_target_on_ground: leg_on_ground_count += 1
 	
-	return leg_on_ground_count / 4
+	return leg_on_ground_count / 4.0
 
 
 func _on_controller_interaction_interacted(controller: GameController) -> void:

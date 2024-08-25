@@ -9,6 +9,11 @@ extends Node3D
 
 @onready var bl_leg: IKTarget = $Legs/BackLeftLeg/IKTarget
 @onready var br_leg: IKTarget = $Legs/BackRightLeg/IKTarget
+@onready var battery: Battery = $Battery
+
+
+func _ready() -> void:
+	battery.consumption = 1.0
 
 
 func _physics_process(delta: float) -> void:
@@ -44,8 +49,16 @@ func _basis_from_normal(normal: Vector3) -> Basis:
 	return result
 
 
-func _on_health_die() -> void:
+func ressurect() -> void:
+	for leg in $Legs.get_children():
+		leg.active = true
+	
+	$GameController.set_process(true)
+
+
+func kill() -> void:
 	for leg in $Legs.get_children():
 		leg.active = false
 	
+	$GameController.set_process(false)
 	$CustomAudioStreamPlayer3D.play_stream("Hurt")
