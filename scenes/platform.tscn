@@ -222,6 +222,9 @@ label_settings = SubResource("LabelSettings_nboqk")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 2.0
+
 [connection signal="gear_changed" from="." to="CanvasLayer/MarginContainer/Control/HBoxContainer2/GearDisplay" method="set_text"]
 [connection signal="interacted" from="ControllerInteraction" to="GameController" method="_on_controller_interaction_interacted"]
 [connection signal="die" from="Character/Health" to="." method="kill"]
@@ -230,3 +233,4 @@ vertical_alignment = 1
 [connection signal="max_charge_changed" from="Battery" to="CanvasLayer/MarginContainer/Control/HBoxContainer/ProgressBar" method="set_max"]
 [connection signal="power_off" from="Battery" to="." method="kill"]
 [connection signal="power_on" from="Battery" to="." method="ressurect"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]

@@ -62,6 +62,7 @@ func ressurect() -> void:
 		leg.active = true
 	
 	$GameController.set_process(true)
+	$DeathTimer.stop()
 
 
 func kill() -> void:
@@ -70,3 +71,8 @@ func kill() -> void:
 	
 	$GameController.set_process(false)
 	$CustomAudioStreamPlayer3D.play_stream("Hurt")
+	$DeathTimer.start()
+
+
+func _on_death_timer_timeout() -> void:
+	get_tree().reload_current_scene()

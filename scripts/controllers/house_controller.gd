@@ -41,11 +41,16 @@ func _process(delta: float) -> void:
 
 
 func handle_movement(delta) -> void:
-	var input := Input.get_axis("move_forward", "move_backward")
+	var input_z := Input.get_axis("move_forward", "move_backward")
+	var input_x := Input.get_axis("move_left", "move_right")
 	var rot_input := Input.get_axis("ui_right", "ui_left")
-	var force_multiplier: float = 1.0 + owner.global_basis.z.dot(Vector3.DOWN) * input
 	
-	var move_force = body.global_basis.z * speed * force_multiplier * delta
+	var force_multiplier_z: float = 1.0 + owner.global_basis.z.dot(Vector3.DOWN) * input_z
+	var force_multiplier_x: float = 1.0 + owner.global_basis.x.dot(Vector3.DOWN) * input_x
+	
+	var move_force_z = body.global_basis.z * speed * force_multiplier_z * delta
+	var move_force_x = body.global_basis.x * speed * force_multiplier_x * delta
+	
 	var rotation_torque = body.global_basis.y * turn_speed * delta
 	
 	var leg_force_multiplier := _get_leg_on_ground_percent()
@@ -53,7 +58,9 @@ func handle_movement(delta) -> void:
 	body.linear_damp = linear_damping * leg_force_multiplier
 	body.angular_damp = angular_damping * leg_force_multiplier
 	
-	body.apply_central_force(input * move_force * leg_force_multiplier * body.gear_force)
+	body.apply_central_force(input_z * move_force_z * leg_force_multiplier * body.gear_force)
+	body.apply_central_force(input_x * move_force_x * leg_force_multiplier * body.gear_force)
+	
 	body.apply_torque(rot_input * rotation_torque * leg_force_multiplier * body.gear_force)
 
 

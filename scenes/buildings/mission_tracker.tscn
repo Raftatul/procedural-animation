@@ -1,41 +1,40 @@
-[gd_scene load_steps=3 format=3 uid="uid://1hig1xqolwwp"]
+[gd_scene load_steps=6 format=3 uid="uid://1hig1xqolwwp"]
 
 [ext_resource type="Script" path="res://scripts/buildings/mission_tracker.gd" id="1_h50bg"]
+[ext_resource type="PackedScene" uid="uid://flg26257hgtg" path="res://assets/meshs/blender/goal.blend" id="2_mx4v1"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_5gegt"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_sjccu"]
+size = Vector3(6, 13, 8)
 
-[node name="MissionTracker" type="Node3D"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_i83yt"]
+radius = 1.2607
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qp5wv"]
+albedo_color = Color(0, 1, 1, 1)
+
+[node name="MissionTracker" type="StaticBody3D"]
 script = ExtResource("1_h50bg")
 
-[node name="Spawnpoints" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 6.5, 0)
+shape = SubResource("BoxShape3D_sjccu")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Spawnpoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
-mesh = SubResource("SphereMesh_5gegt")
-skeleton = NodePath("../..")
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.0805, 0)
+shape = SubResource("CylinderShape3D_i83yt")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Spawnpoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
-mesh = SubResource("SphereMesh_5gegt")
-skeleton = NodePath("../..")
+[node name="goal" parent="." instance=ExtResource("2_mx4v1")]
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="Spawnpoints"]
-mesh = SubResource("SphereMesh_5gegt")
-skeleton = NodePath("../..")
+[node name="Circle" parent="goal" index="0"]
+material_override = SubResource("StandardMaterial3D_qp5wv")
 
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="Spawnpoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
-mesh = SubResource("SphereMesh_5gegt")
-skeleton = NodePath("../..")
-
-[node name="MeshInstance3D5" type="MeshInstance3D" parent="Spawnpoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
-mesh = SubResource("SphereMesh_5gegt")
-skeleton = NodePath("../..")
+[node name="Spawnpoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.5, 0)
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 5.0
 autostart = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+
+[editable path="goal"]

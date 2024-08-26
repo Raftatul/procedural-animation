@@ -1,11 +1,11 @@
-[gd_scene load_steps=21 format=4 uid="uid://d1gpxr5fir24l"]
+[gd_scene load_steps=19 format=4 uid="uid://d1gpxr5fir24l"]
 
 [ext_resource type="PackedScene" uid="uid://ryqqjm6icw6n" path="res://scenes/platform.tscn" id="1_mjkdx"]
 [ext_resource type="Material" uid="uid://ckhcyl414qb2a" path="res://ressources/materials/grids/dark/grid_dark_1.tres" id="2_0xj1x"]
 [ext_resource type="Material" uid="uid://u4oedl4jguwi" path="res://ressources/materials/grids/orange/grid_orange_1.tres" id="3_alkag"]
 [ext_resource type="PackedScene" uid="uid://d2iihx3nb81mq" path="res://scenes/props/energy_cell.tscn" id="4_75lrn"]
-[ext_resource type="PackedScene" uid="uid://bx7hts6huuyr3" path="res://scenes/ball.tscn" id="5_k1l1o"]
 [ext_resource type="PackedScene" uid="uid://0c3m5bjuaal5" path="res://scenes/buildings/goal.tscn" id="6_chk08"]
+[ext_resource type="PackedScene" uid="uid://1hig1xqolwwp" path="res://scenes/buildings/mission_tracker.tscn" id="7_aq07u"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bb4if"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -110,10 +110,6 @@ _data = {
 "new_animation": SubResource("Animation_4r0mf")
 }
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_tvmsv"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_mbxk3"]
-
 [node name="Test" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -165,6 +161,9 @@ autoplay = "new_animation"
 [node name="Goal" parent="World" instance=ExtResource("6_chk08")]
 transform = Transform3D(-0.569045, 0, -0.00732998, 0, 0.569092, 0, 0.00732998, 0, -0.569045, -0.273013, 0.5, -12.0005)
 
+[node name="MissionTracker" parent="World" instance=ExtResource("7_aq07u")]
+transform = Transform3D(0.56, 0, 0, 0, 0.56, 0, 0, 0, 0.56, -0.258928, 0.500001, 10.0947)
+
 [node name="Props" type="Node3D" parent="."]
 
 [node name="EnergyCell" parent="Props" instance=ExtResource("4_75lrn")]
@@ -179,156 +178,5 @@ transform = Transform3D(1, 0, 0, 0, 0.998942, -0.0459907, 0, 0.0459907, 0.998942
 [node name="EnergyCell4" parent="Props" instance=ExtResource("4_75lrn")]
 transform = Transform3D(1, 0, 0, 0, 0.998942, -0.0459907, 0, 0.0459907, 0.998942, -5.22874, 1.5915, -0.0583649)
 
-[node name="Ball" parent="Props" instance=ExtResource("5_k1l1o")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.16389, 0)
-
-[node name="CollisionShape3D" parent="Props/Ball" index="0"]
-shape = SubResource("BoxShape3D_tvmsv")
-
-[node name="MeshInstance3D" parent="Props/Ball" index="1"]
-mesh = SubResource("BoxMesh_mbxk3")
-
-[node name="Ball4" parent="Props" instance=ExtResource("5_k1l1o")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.61197, 0)
-
-[node name="CollisionShape3D" parent="Props/Ball4" index="0"]
-shape = SubResource("BoxShape3D_tvmsv")
-
-[node name="MeshInstance3D" parent="Props/Ball4" index="1"]
-mesh = SubResource("BoxMesh_mbxk3")
-
-[node name="Ball5" parent="Props" instance=ExtResource("5_k1l1o")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.9959, 0)
-
-[node name="CollisionShape3D" parent="Props/Ball5" index="0"]
-shape = SubResource("BoxShape3D_tvmsv")
-
-[node name="MeshInstance3D" parent="Props/Ball5" index="1"]
-mesh = SubResource("BoxMesh_mbxk3")
-
-[node name="Ball2" parent="Props" instance=ExtResource("5_k1l1o")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.16389, 1.47337)
-
-[node name="CollisionShape3D" parent="Props/Ball2" index="0"]
-shape = SubResource("BoxShape3D_tvmsv")
-
-[node name="MeshInstance3D" parent="Props/Ball2" index="1"]
-mesh = SubResource("BoxMesh_mbxk3")
-
-[node name="Ball3" parent="Props" instance=ExtResource("5_k1l1o")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.16389, -1.76817)
-
-[node name="CollisionShape3D" parent="Props/Ball3" index="0"]
-shape = SubResource("BoxShape3D_tvmsv")
-
-[node name="MeshInstance3D" parent="Props/Ball3" index="1"]
-mesh = SubResource("BoxMesh_mbxk3")
-
-[node name="Ball6" parent="Props" instance=ExtResource("5_k1l1o")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.27113, 8.16389, 0)
-
-[node name="CollisionShape3D" parent="Props/Ball6" index="0"]
-shape = SubResource("BoxShape3D_tvmsv")
-
-[node name="MeshInstance3D" parent="Props/Ball6" index="1"]
-mesh = SubResource("BoxMesh_mbxk3")
-
-[node name="Ball7" parent="Props" instance=ExtResource("5_k1l1o")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.27113, 9.61197, 0)
-
-[node name="CollisionShape3D" parent="Props/Ball7" index="0"]
-shape = SubResource("BoxShape3D_tvmsv")
-
-[node name="MeshInstance3D" parent="Props/Ball7" index="1"]
-mesh = SubResource("BoxMesh_mbxk3")
-
-[node name="Ball8" parent="Props" instance=ExtResource("5_k1l1o")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.27113, 10.9959, 0)
-
-[node name="CollisionShape3D" parent="Props/Ball8" index="0"]
-shape = SubResource("BoxShape3D_tvmsv")
-
-[node name="MeshInstance3D" parent="Props/Ball8" index="1"]
-mesh = SubResource("BoxMesh_mbxk3")
-
-[node name="Ball9" parent="Props" instance=ExtResource("5_k1l1o")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.27113, 8.16389, 1.47337)
-
-[node name="CollisionShape3D" parent="Props/Ball9" index="0"]
-shape = SubResource("BoxShape3D_tvmsv")
-
-[node name="MeshInstance3D" parent="Props/Ball9" index="1"]
-mesh = SubResource("BoxMesh_mbxk3")
-
-[node name="Ball10" parent="Props" instance=ExtResource("5_k1l1o")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.27113, 8.16389, -1.76817)
-
-[node name="CollisionShape3D" parent="Props/Ball10" index="0"]
-shape = SubResource("BoxShape3D_tvmsv")
-
-[node name="MeshInstance3D" parent="Props/Ball10" index="1"]
-mesh = SubResource("BoxMesh_mbxk3")
-
-[node name="Ball11" parent="Props" instance=ExtResource("5_k1l1o")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.38313, 8.16389, 0)
-
-[node name="CollisionShape3D" parent="Props/Ball11" index="0"]
-shape = SubResource("BoxShape3D_tvmsv")
-
-[node name="MeshInstance3D" parent="Props/Ball11" index="1"]
-mesh = SubResource("BoxMesh_mbxk3")
-
-[node name="Ball12" parent="Props" instance=ExtResource("5_k1l1o")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.38313, 9.61197, 0)
-
-[node name="CollisionShape3D" parent="Props/Ball12" index="0"]
-shape = SubResource("BoxShape3D_tvmsv")
-
-[node name="MeshInstance3D" parent="Props/Ball12" index="1"]
-mesh = SubResource("BoxMesh_mbxk3")
-
-[node name="Ball13" parent="Props" instance=ExtResource("5_k1l1o")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.38313, 10.9959, 0)
-
-[node name="CollisionShape3D" parent="Props/Ball13" index="0"]
-shape = SubResource("BoxShape3D_tvmsv")
-
-[node name="MeshInstance3D" parent="Props/Ball13" index="1"]
-mesh = SubResource("BoxMesh_mbxk3")
-
-[node name="Ball14" parent="Props" instance=ExtResource("5_k1l1o")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.38313, 8.16389, 1.47337)
-
-[node name="CollisionShape3D" parent="Props/Ball14" index="0"]
-shape = SubResource("BoxShape3D_tvmsv")
-
-[node name="MeshInstance3D" parent="Props/Ball14" index="1"]
-mesh = SubResource("BoxMesh_mbxk3")
-
-[node name="Ball15" parent="Props" instance=ExtResource("5_k1l1o")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.38313, 8.16389, -1.76817)
-
-[node name="CollisionShape3D" parent="Props/Ball15" index="0"]
-shape = SubResource("BoxShape3D_tvmsv")
-
-[node name="MeshInstance3D" parent="Props/Ball15" index="1"]
-mesh = SubResource("BoxMesh_mbxk3")
-
 [node name="Platform" parent="." instance=ExtResource("1_mjkdx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.78687, 0)
-
-[editable path="Props/Ball"]
-[editable path="Props/Ball4"]
-[editable path="Props/Ball5"]
-[editable path="Props/Ball2"]
-[editable path="Props/Ball3"]
-[editable path="Props/Ball6"]
-[editable path="Props/Ball7"]
-[editable path="Props/Ball8"]
-[editable path="Props/Ball9"]
-[editable path="Props/Ball10"]
-[editable path="Props/Ball11"]
-[editable path="Props/Ball12"]
-[editable path="Props/Ball13"]
-[editable path="Props/Ball14"]
-[editable path="Props/Ball15"]
